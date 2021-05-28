@@ -44,7 +44,7 @@ public class Step1 {
 	private static void printMenber(String[] names, int[] ages, String[] phoneNums) {
 		// for 반목문으로 3명을 한번에 출력
 		int dataLength = names.length;//이름배열에 있는 사람의 명수를 구하기 목적은 아래 for반복의 끝값을 구함
-		for(int i=0;i<dataLength;i++) {
+		for(int i=0;i<dataLength;i++) {//고전적 for반복문
 			System.out.println("입력하신 회원의 이름은 "+names[i]+"님,나이는 "+ages[i]+",폰번호는"+phoneNums[i]);
 		}
 	}

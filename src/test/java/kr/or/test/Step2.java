@@ -77,6 +77,6 @@ class MemberService {
 			+" 폰번호는 "+member.getPhoneNum());
 		}
 	}
-	//회원을 출력하는 메서드를 생성 합니다.
+	//회원을 출력하는 메서드를 생성 합니다. 그러합니다
 	
 }

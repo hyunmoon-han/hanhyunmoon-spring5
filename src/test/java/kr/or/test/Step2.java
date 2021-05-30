@@ -63,6 +63,7 @@ public class Step2 {
 		//static 예약어는 컴파일시 메모리에 로딩(객체가됨)이 되게 명시
 		//매번 static으로 만들면 메모리 가득차서 프로그램실행이 느려지거나 멈춤.
 		//MemberService.printMember(members);
+		  //memberservice = null;//메모리에서 오브젝트를 삭제하는 명령
 	}
 }
 class MemberService {

@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0A46AF59-C3C6-26E1-730E-A0DCF7C9097B" schemaObject="5D26FF4B-8D45-C36C-0B84-7F2F83DB5070" name="TBL_BOARD_TYPE">
+<sourceConnName>XE</sourceConnName>
+<sourceObjSchema>XE</sourceObjSchema>
+<sourceObjName>TBL_BOARD_TYPE</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 07:42:50 UTC</createdTime>
+<commentInRDBMS><![CDATA[게시판생성관리(NOTICE,GALLERY등등)]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="BOARD_TYPE" id="F37D9034-1B90-8DF7-6CD2-4DCDD57690E4">
+<sourceConnName>XE</sourceConnName>
+<sourceObjSchema>TBL_BOARD_TYPE</sourceObjSchema>
+<sourceObjName>BOARD_TYPE</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 07:42:50 UTC</createdTime>
+<commentInRDBMS><![CDATA[게시판 타입(NOTICE,GALLERY)]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BOARD_NAME" id="D6FCE137-BCAE-D497-207C-366A9272E5AA">
+<sourceConnName>XE</sourceConnName>
+<sourceObjSchema>TBL_BOARD_TYPE</sourceObjSchema>
+<sourceObjName>BOARD_NAME</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 07:42:50 UTC</createdTime>
+<commentInRDBMS><![CDATA[한글게시판이름]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BOARD_SUN" id="3C22D814-386F-17CC-7B8C-40DA6B38EDEC">
+<sourceConnName>XE</sourceConnName>
+<sourceObjSchema>TBL_BOARD_TYPE</sourceObjSchema>
+<sourceObjName>BOARD_SUN</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 07:42:50 UTC</createdTime>
+<commentInRDBMS><![CDATA[게시판출력순서]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,11,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B5A1755D-46CC-F95B-7FE6-CDA31C17CD42" name="TBL_BOARD_TYPE_PK">
+<sourceConnName>XE</sourceConnName>
+<sourceObjSchema>XE</sourceObjSchema>
+<sourceObjName>TBL_BOARD_TYPE_PK</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 07:42:50 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F37D9034-1B90-8DF7-6CD2-4DCDD57690E4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="14351116-95B0-AE1E-6197-2C35BF8733BD" schemaObject="5D26FF4B-8D45-C36C-0B84-7F2F83DB5070" name="TBL_BOARD_TYPE_PK">
+<sourceConnName>XE</sourceConnName>
+<sourceObjSchema>XE</sourceObjSchema>
+<sourceObjName>TBL_BOARD_TYPE_PK</sourceObjName>
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 07:42:50 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F37D9034-1B90-8DF7-6CD2-4DCDD57690E4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

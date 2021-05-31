@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SegmentOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.SegmentOraclev10g" name="Storage4" directorySegmentName="seg_0" id="4E1E7FEA-EB33-9360-815B-0F7E7A935729">
+<createdBy>admin</createdBy>
+<createdTime>2021-05-31 03:31:14 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<initrans>2</initrans>
+<maxTrans>255</maxTrans>
+<scInitialExtent>65536</scInitialExtent>
+<scMaxExtents>2147483645</scMaxExtents>
+<scNextExtent>1048576</scNextExtent>
+</SegmentOraclev10g>

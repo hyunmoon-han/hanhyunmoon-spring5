@@ -1,4 +1,13 @@
-#### 20210531(월)작업예정
+#### 20210531(월)작업.
+- RDBMS:RelationDataBaseManagementSystem(관계형테이타베이스관리시스템)
+- 오라클:테이블스페이스(TablesSpcae)=스키마(Scheme:Nysql)=데이터베이스(DB-MS-SQL)
+- 지난주 금요일날,오라클 웹용 관리프로그램에서 XE라는 테이블스페이스를 XE사용자로 추가했음.
+- ERD-객체관계가그림 :Entity= 테이블
+- 데이터 모델:Model object를 형상화 시킨것을 모델이라고 함.데이터베이스를 말함.
+- NVC 스프링프로젝트에서 M이 Modle이고,스프링프로젝트 구성중에 DB를 가리킴.
+- 참고로,V는 view로 jsp를 말합니다.
+- 참고로,C는 controller고 클래스를 말합니다. 
+- 설치시 이름:system 암호:apmsetup.
 - 4장 패키지와 예외처리 실습.
 -  스프링 프로젝트ERD 제작후 게시판UI디자인 적용.
 

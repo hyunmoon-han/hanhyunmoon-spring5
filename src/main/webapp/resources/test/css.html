@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- 페이지 언어 설정(Unicode Type Format-8비트 약자)-->
+    <!-- 다국어 지원사이트에서필수 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS실습</title>
+    <!-- 나눔고딕폰트 외부글꼴 사용하기 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+<style>
+    /* 03선택자 종류
+     범용선택자:*(별표:에스터리스크) //모두다
+     태그선택자:h1,h2,div,header,footer,atricle 등
+     class선택자:.class이름,특징:중복사용가능
+     id선택자:id이름,특징: 중복선택하면 오동작됨
+     가상선택자: ::after, ::blfore,:blfore
+     가상요소(Element-가상태그): :hover 사용예 a:hover
+     */
+
+  /* 범용선택자
+   *
+     /*div *{
+          color:green; 
+       }*/
+     h1 {background-color: skyblue;}
+     /* 태그선택자 */
+     .box-one , .box-two{background-color: tomato;}
+     #box-four ,#box-five{background-color: yellow;}
+     /* 클레스 선택자 */
+     
+     /* 가상선택자 */
+     .box-one p:after{content:  '+add';}
+     .box-one p:before{content: 'add+';}
+     /* 가상요소,hover(마우스 오버영역) */
+     a:hover{color: blue;}
+     /* 크기단위 font크기,img크기,
+     단위종류 3가지:~ px,em(1.2배수),~rem(root기반배수) */
+     .box-one {font-size: 8px;
+     /* font-size: 1.5em;   /* 웹브라우저 기본 폰트크기는 
+     16px*1.5=1.5em */
+     /* font-size: 1.5rem; */
+     }
+     .box-one p{
+         font-size: 1.5em;/* 웹르가우저 기본폰트인 16px의 1.5배 아니고, 부모요소의 1.5배(8px의1.5배) */
+          font-size: 1.5rem; 
+     }
+/* 위에서부터 해석하는 방식 :인터프러터형=자바스크립트 인터프리터형 언어 */
+.box-one {
+    width: 200px;
+    height: 200px;
+    background-color: green;
+    padding: 10px;  /* 안쪽여백:  마진 4가지방향 12시시작 시계방향ex) 0px 0px 0px 0x */
+    margin: 10px;/* 바깥여백 : 2가지 방향 상화/좌우 */
+    border: 10px solid black;
+    box-sizing: border-box;/* box-sizing: border-box; 저장하는순간크기 정렬,필수 */
+    /* 가로 가운데 정렬하는 방범 */
+    margin:  0px;
+    margin:  0px auto;/* 0상하/ auto 좌우 */
+margin: 0px;
+/* position: absolute; /* 자리가 다른 태그와 관련없는 위치가짐,절대위치 */
+position: fixed;/* 고정위치,(페이지따라이동),고정메뉴적용 */
+
+margin-left: 20px;
+margin-top: 20px;
+
+}
+
+.box-two {
+   
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    /* box-sizing: border-box; */
+}
+</style>
+</head>
+<body>
+    <h1>
+        헬로 css
+    </h1>
+    <div class="box-one"><p style="color: white;"><a href="#">상단으로이동</a> </p></div>
+    <div class="box-two"><a href="#"> two 2222222</a></div>
+    <div class="box-three">three</div>
+    <div id="box-four">four</div>
+    <div id="box-five">five</div>
+
+     <!-- 
+        10 크롬 확장프로그램으로 컬러 피커 사용해보기 ok
+        09 구글 폰트 사용하기: 나눔고딕체 사용ok
+        08 위치: 고정, 절대위치, 상대위치(기준)
+        07 정렬: 가로 가운데정렬
+        06 테두리크기: 여백(안쪽 패딩, 바깥쪽 마진)
+        05 박스크기: 박스크기에 테두리크기,패딩크기 무시
+        04 크기 단위: px, em(부모영역의 2배), rem(루트영역의 2배)
+        03 선택자 종류 사용
+        02 CSS용어 설명: h${헬로 CSS}*6
+        cascade style sheet 계층형 스타일 표
+        01 css 적용하는 3가지 방법 확인, 내부css(파일안에 css주는거), 외부css, 인라인css
+     -->
+    
+     
+     <!-- 아래가 인라인css -->
+     <p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p>
+     <p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p>
+     <p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p><p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Tempora porro voluptas eius ad nisi et harum tempore culpa debitis magnam ipsum, voluptate autem iure dolorum rem aut, placeat quos perspiciatis.
+     </p>
+</body>
+</html>

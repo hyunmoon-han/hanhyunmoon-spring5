@@ -58,7 +58,7 @@ public class Step2 {
 		MemberService memberService = new MemberService();
 		memberService.printMember(members);//객체로접근 아래비교
 		//객체로 만들면, 호출(runtime)시 메모리에 로딩됩니다->실행끝나면, 반환.
-		//와부클래스는 아래처럼 직접 접근해서 메서드나 변수를 사용할수 없음.
+		//외부클래스는 아래처럼 직접 접근해서 메서드나 변수를 사용할수 없음.
 		//외부 클래스로 접근하려면, 객체(실행가능한클래스=메모리로딩)로 만들어야 가능함.//대문자 -클래스로접근
 		//static 예약어는 컴파일시 메모리에 로딩(객체가됨)이 되게 명시
 		//매번 static으로 만들면 메모리 가득차서 프로그램실행이 느려지거나 멈춤.

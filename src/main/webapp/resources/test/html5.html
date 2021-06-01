@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html5 실습</title>
+    <style>
+        /*border:px(테두리 크기) solid(실선) */
+        table,
+        tr,
+        td,
+        th {
+            border: 1px solid black;
+
+            font-size: 13px;
+        }
+
+        /*  style의 주석 ctrl+/ 키 조합*/
+        /* 테이블태그의 테두리 이중선 1개선으로 병합 */
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <style>
+        /* css: cascade style sheet 계층형 스타일 표 */
+        header,
+        nav,
+        section,
+        aside,
+        footer {
+            /* dotted(점선) */
+            border: 1px dotted black;
+        }
+
+        /* text-align(글자 조절) */
+        header>h1,
+        footer>h1 {
+            text-align: center;
+        }
+
+        /* width,heigit는 속성의 크기 
+        width=가로폭
+        heigit=세로폭*/
+        nav {
+            display: block;
+            height: 60px;
+        }
+
+        /* margin(여백) */
+        nav>ul>li {
+            float: left;
+            margin-right: 20px;
+        }
+
+        section {
+            width: 79%;
+            display: inline-block;
+        }
+
+        section>article {
+            margin: 10px 30px;
+            border: 1px solid skyblue;
+        }
+
+        /* padding :안쪽여백       상하/ 좌우
+             margin 바깥쪽여백*/
+        aside {
+            width: 20%;
+            display: inline-block;
+            height: 100%;
+            right: 0px;
+            position: absolute;
+            text-align: center;
+        }
+
+        div.contents {
+            /* 내부의 컨텐츠 기준되는 외부 요소에 관계형 포지션 추가   */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* div 영역 태그는 주로 내부에 다양한 콘테츠를 담을때, 다르게 이야기 하자면,
+다영한 콘텐트(p, h1, img, ul 등등)를 묶을때 사용하는 영역 태그 힙니다.*/
+    </style>
+</head>
+
+<body>
+    -
+    <!--   h${...}* 갯수 ro  
+    - p 태그는 문단의 약자
+    -줄마꿈이 이루어지는 태그를 영역을 블럭영역
+    -줄바꿈이 이루어지지 않는 영역은 인라인블럭영역=span
+    -도메인(사람이확인) ==IP주소(컴퓨터시스템)
+    사람색상(color):red,blud,black,-->
+    <!--  컴퓨터 색상(color):#ff(red)-00(green)-00(blue): 
+        예, 흰색: #ffffff = #fff = white = 함수 rgb(255, 255, 255);
+       #16진수 : 빛의 3가지 색상 (3원색) 빛은 더하면 흰색으로 변함.
+         참고로, 물감은 더하면 검은색이로 변함.
+        -->
+    <!-- 16진수 :0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f= 총16개
+    
+     -->
+    <!-- 매칭=바인딩,도메인과 IP주소는 매칭, 바인딩되있다 -->
+    <!-- 로렘 입숨(립숨)은 작업공간에 채울내용을 자동으로 생성주는 기능-->
+    <p>lorem 100 </p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            <tr>
+                <td>1</td>
+                <td>모든 국민은 인간다운 생활을 할 권리를 가...</td>
+                <td>조려</td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>대통령의 임기는 5년으로 하며, 중임할 수 ...</td>
+                <td>정중부</td>
+            </tr>
+
+            <tr>
+                <td>3</td>
+                <td>국회는 국무총리 또는 국무위원의 해임을 ...</td>
+                <td>문무왕</td>
+            </tr>
+
+            <tr>
+                <td>4</td>
+                <td>대통령은 헌법과 법률이 정하는 바에 의하...</td>
+                <td>방정환</td>
+            </tr>
+
+
+            <tr>
+                <td>5</td>
+                <td>타인의 범죄행위로 인하여 생명·신체에 대...</td>
+                <td>지석영</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <!--H2O, x2 아래첨자 ,위첨자 보이게 -->
+
+    <p>H<sub>2</sub>O</p>
+    <p>X<sup>2</sup>=4</p>
+    <!-- 리스트형 2가지: ol(Ordered List 정렬된 리스트), ul(Unordered List 비정렬) -->
+    <ol type="i">
+        <li>헬로 html</li>
+        <li>헬로 html</li>
+        <li>헬로 html</li>
+        <li>헬로 html</li>
+    </ol>
+    /* ol이 순서있는거 ex)숫자 */
+    /* ul이 순서없는거 ex)숫자x*/
+    <ul>
+        <li>헬로 html</li>
+        <li>헬로 html</li>
+        <li>헬로 html</li>
+    </ul>
+    <!-- 영역지정 div:가상링크는 #으로만듬
+         -->
+    <div style="background-color:red;">
+        <a href="#"> 페이스북</a>
+        <a href="#">네이버 </a>
+        <a href="#">다음</a>
+    </div>
+    <!-- 컨텐츠 경로 : 상대경로   절대경로  -->
+    <!-- width% 확인하자 ,이미지 파일 다운후 이미지 폴더에 옮겨-->
+    <img style="width:100%" src="img/tree-736885_1280.jpg" alt="엑박일때 표시할 내용여기에">
+    <img style="width:100%" src="/test/img/tree-736885_1280.jpg" alt="엑박일때 표시할 내용여기에">
+    <!-- 유튜브 영상(영상 소스 복사후 붙혀넣기=공유-퍼가기,코드복사) -->
+    <iframe width="100%" height="317" src="https://www.youtube.com/embed/wVbjkI6d5RI" title="YouTube video player"
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    <!-- HTML5폼태그 사용 ,엘리먼트=form태그,input태그-->
+    <!-- 액션-자료전송(메서드:방법),ridio(file),submit -->
+    <!-- ridio,file등 2개 이름 차이 -->
+    <form action="html5.html">
+        <input type="text" name="text" id="">
+        <input type="password" name="passd" id="">
+        <input type="date" name="date" id="">
+        <input type="color" name="color" id="">
+        <input type="radio" name="radio" id="">
+        <input type="radio" name="radio" id="">
+        <!-- radio는 2개중 하나선택,네임이 같음-->
+        <input type="checkbox" name="checkbox" id="">
+        <input type="checkbox" name="fdsa" id="">
+        <!-- 체크박스는 2개중 2개모두,네임이 다름-->
+        <input type="file" name="file" id="">
+        <input type="file" name="file" id="">
+        <textarea name="extarea" id="" cols="30" rows="10"></textarea>
+        <input type="button" value="버튼">
+        <input type="submit" value="서밋">
+        <!-- 서밋=전송 -->
+        <input type="reset" value="입력최소">
+    </form>
+    <!-- 테이블 태그 제어,셀병합
+table(표) ,tr(),td(),border(테두리)-->
+
+    <table>
+        <!-- th는 굵은체+가운데 정렬 -->
+        <tr>
+            <th>순번</th>
+            <th>책이름</th>
+            <th>가격</th>
+            <th>판매량</th>
+            <th>판매액</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>HTML</td>
+            <td>7,00</td>
+            <td rowspan="2">1000</td>
+            <!-- rowspan은 세로칸병합 -->
+            <td>7,000,000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>js</td>
+            <td>7000</td>
+            <td>70000000</td>
+        </tr>
+        <tr>
+            <td colspan="4">합계</td>
+            <!-- clospan=가로칸병합 -->
+            <td>14,000,000</td>
+        </tr>
+    </table>
+
+
+    <!-- HTML5레이아웃 구조에 사용된 태그
+    header, nav, section, article, aside, footer
+    -->
+
+
+    <header>
+        <h1>herder</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#"></a>menu</li>
+            <li><a href="#"></a>menu</li>
+            <li><a href="#"></a>menu</li>
+        </ul>
+    </nav>
+    <div class="contents">
+        <section>
+            <h1>section</h1>
+            <article>
+                <h1>article1</h1>
+            </article>
+            <article>
+                <h1>article2</h1>
+            </article>
+        </section>
+        <aside>
+            <h1>aside</h1>
+
+        </aside>
+    </div>
+    <footer>
+        <h1>footer</h1>
+    </footer>
+    <hr>
+    <br>
+    <br>헬로 html5<br>
+    <p>안녕</p>
+    <span style="color:#5902a7;">안녕</span>
+</body>
+
+</html>

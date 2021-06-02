@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AdminController {
 	//URL요청 경로는 @RequestMapping 반드시 절대경로로 표시
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
-	public String admin(Model model) {
+	public String admin(Model model) throws Exception {//에러발생시 Exception클래스의 정보를 스프링으로 보내게 됩니다.
 		
 		//아래 상대경로에서/WEB-INF/views폴더가 루트(최상위)(생략prefix 접두어)입니다.
 		//아래 상대경로에서 home.jsp에서 .jsp(생략suffix접미어)입니다.

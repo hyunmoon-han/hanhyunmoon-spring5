@@ -58,3 +58,63 @@ SELECT deptno, sum(sal) from emp GROUP by deptno ORDER by sum(sal) DESC;  -- 서
 SELECT deptno, sum(sal)  from emp
 GROUP by deptno  --1:1매칭필요
 ORDER by sum(sal) DESC;
+-- having은 group by의 조건문을 적습니다.
+-- 부서별 평균 연봉이 2000이상인 부서의 번호와 부서별평균급여
+SELECT deptno, round(avg(sal)) from emp     --where avg(sal)>=2000 에러   검색조건
+GROUP BY deptno
+HAVING AVG(sal) >=2000;    -- 그룹조건
+
+--9장은 패스(레프트용 함수사용)
+-- 10장 .테이블 조인  2개의 테이블을 연결해서 결과를 구하는 예약어
+-- 댓글 개수 구할떄필요,
+-- 카티시안프러덕트 조인(합집합-게시물이 10개 ,딸린 댓글100개 ->조인하면110개~1000개)사용x
+-- (인너)조인(교집합)을 제일 많이 사용.
+-- 아래 조인 방식이 oracale방식
+SELECT dept.dname,emp.* FROM emp,dept 
+WHERE emp.deptno = dept.deptno
+AND emp.ename ='SCOTT';
+--표준쿼리(ANSI)방식(아래) inner키워드 디폴드값(기본값) inner아래생략
+SELECT * FROM emp e  inner JOIN dept d
+ON e.deptno=d.deptno;
+
+SELECT d.dname,e.* FROM emp e JOIN dept d
+ON e.deptno=d.deptno
+WHERE e.ename= 'SCOTT';
+-- 조인과 그룹을 이용해서 댓글 카운터도 출려하는 게시판 리스트만들기
+SELECT bod.bno, title||'['||count(*)||']', writer, bod.reg_date,view_count
+FROM tbl_board BOD 
+INNER JOIN tbl_reply REP ON bod.bno = rep.bno
+GROUP BY bod.bno,title,writer,bod.reg_date,view_count
+ORDER BY bod.bno;
+--11 서브쿼리 :
+-- 단일행서브쿼리 필드값을 비교할떄 , 비교하는 값이 단일한(필드값) 
+-- 다중행서브쿼리 테이블값을 select쿼리로 생성(레코드형식)
+-- 12.테이블 구조 생성(creatr) ,변경(alter;) ,삭제(drop;)
+-- ERD 관계형 다이어그램으로 물리적 테이블 생성 (포워드엔지니어링)->아래 강제로 만들어봄 오케?
+CREATE TABLE TBL_MEMBER_DEL
+(
+USER_ID VARCHAR(50) PRIMARY KEY
+,USER_PW VARCHAR(255)
+,USER_NAME VARCHAR(255)
+,EMAIL VARCHAR(255)
+,POINT NUMBER(11)
+,ENABLED NUMBER(1)
+,LEVELS VARCHAR(255)
+,REG_DATE TIMESTAMP
+,UPDATE_DATE TIMESTAMP
+);
+--ALTER 테이블로 필드명 변경 (아래)
+DESC tbl_member_del;
+ALTER TABLE tbl_member_del RENAME COLUMN email To user_email;
+--DEPT 테이블의 deptno 숫자 2자리때문에 에러 -> 4자리로 크기변경
+DESC dept; --단,작은자리 큰자리로 변경 문제 없음.
+ALTER TABLE dept MODIFY(deptno NUMBER(4));
+DROP TABLE tbl_member_del;--12장끝13장넘어가
+-- 14장 트래잭션 DB단에서 사용하지 않고, 스프링단에서 트랜잭션을 사용 @Transactional 인페페이스를 사용
+-- commit과 rollback;(DML문:insert,update,delete)
+-- rollback은 제일 마지막 커밋된 상태로 되돌립니다.
+--15장 pk생성시 자동으로 2가지 생성  -NOT NULL(빈값방지), UNIQUE(no중복)
+--제약조건(contraint)이 자동생성, index(테이블)도 자동생성(검색시중요)
+-- ERD로 게시판 테이블-[댓글|첨부파일] foreign key(외래키) 부자관계생성
+--19장 사용자 추가(CreateWorkSpace)시 오라클데스크탑x,SQL플러스x, 
+--대신 웹프로그램을 사용 (http://127.0.0.1:9000/apex/f?p=4950)

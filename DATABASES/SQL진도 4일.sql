@@ -20,3 +20,41 @@ SELECT *FROM dept02 order by deptno;
 --delete는 래코드1줄을 지우는 명령
 DELETE FROM dept02;   -- 이렇게 사용 모든 레코드삭제됨  표현조건집어노
 DELETE FROM dept02 WHERE deptno >= 0;  --모두 삭제해도 where 반드시 포함.
+
+-- DROP TABLE테이블명 은 테이블자체를 물리적으로 없애는 명령
+DROP TABLE dept02; --드롭 테이블은 커밋없이 바로 적용.
+CREATE TABLE emp01 as SELECT *FROM emp; -- 테이블 복제명령
+SELECT * FROM emp01;
+--UPDATE 테이블명 SET 필드명 ='바꿀값' where empno='특정ID'
+UPDATE emp01 SET ename ='한현문';
+ROLLBACK; -- DCL문,롤백은 마지막 커밋 바로전까지 가능
+UPDATE emp01 SET ename ='한현문' WHERE empno = 7839;
+UPDATE emp01 SET sal =sal*1.1;-- 모든 직업의 연복을 10%인상
+UPDATE emp01 SET hiredate = sysdate;
+UPDATE emp01 SET hiredate = '1997/01/20' WHERE ename = '한현문';
+-- 머지 표준쿼리(ANSI)가 아니라서 건너뜀.
+
+-- 8장 함수 (count,upper,lower,to_char,round...)그룹함수
+--라운드함수(반올림) 소수점기준. round(10,o5,2)수수점2쨰반올림
+SELECT ename,round(sal,-3) FROM emp; --레코드 여러개
+SELECT SUM(sal) FROM emp;  --1개의 레코드만.그룹함수라고함 다더해
+SELECT AVG(sal) FROM emp;  -- 평균 1개의 레코드로 출력
+SELECT round(AVG(sal)) FROM emp;  -- 평균 1개의 레코드로 출력
+SELECT COUNT(*) FROM emp WHERE sal>=
+(SELECT AVG(sal) FROM emp);
+ --위 커리 사원중에 평균연봉보다 많이 받는 사람의 숫자| AVG함수를 where 조건에 사용 못할떄 서브쿼리이용
+SELECT MAX(sal),MIN(sal) FROM emp; -- 최대 최소 연봉 출력
+SELECT MAX(sal),MIN(sal)
+,MAX(sal)-MIN(sal) AS "대표와사원의연봉차"
+FROM emp; 
+-- 자바코딩에서는 소문자로 통일합니다-select
+-- 부서별 연봉의 합계를 구해서 제일 급여가 많이 지출되는 부서(아래)
+-- DB셋팅에서 대소문자구분해서 사용할지, 구분하지 않을 지 셋팅
+SELECT * FROM(
+SELECT deptno,SUM(sal)as dete_sal
+FROM emp GROUP BY deptno
+)R ORDER BY dete_sal DESC; --R (as R) r의 역활은 별칭
+SELECT deptno, sum(sal) from emp GROUP by deptno ORDER by sum(sal) DESC;  -- 서브쿼리사용x
+SELECT deptno, sum(sal)  from emp
+GROUP by deptno  --1:1매칭필요
+ORDER by sum(sal) DESC;

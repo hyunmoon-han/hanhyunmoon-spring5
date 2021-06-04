@@ -53,9 +53,26 @@ SELECT * FROM emp WHERE comm=0;
 SELECT NVL(comm,0),E.* FROM emp E WHERE NVL(comm,0)=0; 
 -- NVL2(필드명, 널이아닐때100,널일때0),NVL(필드명,널일때0)
 --오라클은 표준 쿼리x ,ANSI쿼리 표준입니다.
-SELECT NVL2(comm,100,0),E.* FROM emp E WHERE NVL(comm,0)=0; 
+SELECT DECODE(comm,null,0,100), NVL2(comm,100,0),E.* FROM emp E WHERE NVL(comm,0)=0; 
 
 SELECT DECODE(comm,null,0,100),E.* FROM emp E WHERE NVL(comm,0)=0;-- 아래 값은 같다.
+
+ 
+SELECT DECODE(comm,null,0,100)
+, NVL2(comm,100,0)
+,E.* FROM emp E WHERE NVL(comm,0)=0;
+
+SELECT NVL2(comm,100,0),E.* FROM emp E WHERE NVL(comm,0)=0;
+
+SELECT 
+CASE WHEN comm is null THEN 0
+WHEN comm=0 THEN 100
+WHEN comm >0 THEN comm
+end as "CASE쿨력문"
+,DECODE(comm,null,0,100)
+,nvl2(comm,100,0)
+,E.* FROM emp E WHERE NVL(comm,0)=0;
+
 SELECT NVL2(comm,100,0),E.* FROM emp E WHERE NVL(comm,0)=0;
 --연봉 기준으로 정렬 sort =순서order by 필드명 오름차순(초기값)|내림차순
 SELECT E.sal,E.* FROM emp E ORDER BY E.sal ASC; -- 오름

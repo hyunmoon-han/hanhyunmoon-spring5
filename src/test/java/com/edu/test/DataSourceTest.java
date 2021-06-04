@@ -5,7 +5,9 @@ package com.edu.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -49,6 +51,26 @@ public class DataSourceTest {
 		 
 		 logger.debug("데이터베이스 직접 접속이 성공 하였습니다. DB종료는 "+connection.getMetaData().getDatabaseProductName());
 		 // DriverManager:데이터연동할때 쓰는클래스
+		 //직접쿼리를 날립니다.날리기전 쿼리문자  객제생성statement
+		 Statement stmt = connection.createStatement();
+		 //위 쿼리문장 객체를 만드는 이유? 보안 (SQL인젝션공격을 방지)
+		 //stmt객체가 없으면 SQL인젝션 방지코딩을 넣어야합니다.
+		 //Insert쿼리 문장 만듬(아래)
+		 //stmt.executeQuery("insert into dept02 values (20,'디자인부','경기도')");
+		 //예전 방식으로 더미 데이터(샘플데이터)를 100개를 입력합니다.
+		 for(int cnt=0;cnt<100;cnt++) {
+		 stmt.executeQuery("insert into dept02 values ("+cnt+",'디자인부','경기도')");
+		 }
+		 //인서트,업데이트,삭제시 sql디벨러퍼에서는 커밋이 필수지만,외부 java클래스에서 인서트 할떄는 자동 		커밋됩니다.
+		 
+		 //테이블에 입력되어있는 레코드셋를 select 쿼리 stmt문장으로 가져옴(아래) 
+		 ResultSet rs = stmt.executeQuery("select*from dept02 order by deptno");//전에작업방식 ,코딩테스트용공부
+		 //위에서 저장된 rs객체를 반복문로 출력(아래)
+		 while(rs.next()){//re객체에 레코드가 없을때까지 반복
+			 logger.debug(rs.getString("deptno")+" " + rs.getString("dname")+ " " 		+rs.getString("loc"));
+			 
+		 }
+		 
 		 connection=null;//메모리 초기화
 	 }
 	 

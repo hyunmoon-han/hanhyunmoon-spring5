@@ -1,6 +1,6 @@
 -- DDL문 (create;alter;) ,DCL문 (commit;rollback;)
 -- DML문 (Data Manufacture Language ) insert,update,delete
--- insert문 :테이블에 샤로우 레코드(row) 추가
+-- insert문 :테이블에 새로운 레코드(row) 추가
 -- CREATE TABLE dipt02 AS SELECT  * FROM dept
 -- 위 처럼 커리를 실행하면 dept 테이블과 구조와 내용이 똑같은 테이블생성
 --where 조건이 붙으면,구조는 같으나 내용은 빈 테이블이 생성

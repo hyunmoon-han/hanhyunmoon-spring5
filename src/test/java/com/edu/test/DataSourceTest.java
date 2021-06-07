@@ -42,12 +42,22 @@ public class DataSourceTest {
 	 DataSource dataSource;// Inject로 객체를 만들면 메모리 관리를 관리를 스프링이 대신 해줌.
 	 //Inject는 자바 8부터 지원, 그럼, 이전 자바7에서는 @Autowired로 객체를 만들었슴
 	 
-	 
+	//스프링 코딩순서:
+	 //M-V-C 사이에 데이터를 입출력하는 임시저장 공간 (VO클래스-멤버변수+get/set메서드) 생성
+	 //보통 ValueObject클래스는 DB테이블과 1:1로 매칭이 됩니다.
+	 //그래서 , 1. MeberVO.java클래스를 생성.(필수)
+	 //2.DB(마이바티스)쿼리를 만듭니다. (VO사용됨) --내일부터시작
+	 @Test
+	 public void selectMeber() throws Exception{
+		 //회원괸리 테이블에서 더미로 입력한 100개의 레코드를 출력하는 메서드 테스트->회원관리 목록이출력
+		
+	 }
+	
 	 @Test
 	 public void oldQueryTest() throws Exception{
 		 //스프링빈을 사용하지 않을때 예전 방식-코딩테스트에서는 스프링설정을 안쓰고, 직접DB아이디 /암호 입력
 		 Connection connection =null;
-		 connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE","XE","apmsetup");
+		 connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE","XE2","apmsetup");
 		 
 		 logger.debug("데이터베이스 직접 접속이 성공 하였습니다. DB종료는 "+connection.getMetaData().getDatabaseProductName());
 		 // DriverManager:데이터연동할때 쓰는클래스
@@ -65,7 +75,7 @@ public class DataSourceTest {
 			 */		 //인서트,업데이트,삭제시 sql디벨러퍼에서는 커밋이 필수지만,외부 java클래스에서 인서트 할떄는 자동 		커밋됩니다.
 		 
 		 //테이블에 입력되어있는 레코드셋를 select 쿼리 stmt문장으로 가져옴(아래) 
-		 ResultSet rs = stmt.executeQuery("select*from dept order by deptno");//전에작업방식 ,코딩테스트용공부
+		 ResultSet rs = stmt.executeQuery("select * from dept order by deptno");//전에작업방식 ,코딩테스트용공부
 		 //위에서 저장된 rs객체를 반복문로 출력(아래)
 		 while(rs.next()){//re객체에 레코드가 없을때까지 반복
 			 logger.debug(rs.getString("deptno")+" " + rs.getString("dname")+ " " 		+rs.getString("loc"));
@@ -76,20 +86,14 @@ public class DataSourceTest {
 		 connection=null;//메모리 초기화
 	 }
 	 
-	 @Test
-	 public void dbConnectionTest() {
-		 //데이터베이스 커넥션 테스트: 설정은 root-context의 빈(스프링클래스)을 이용 
-		 try {
-			Connection connection =dataSource.getConnection();
-			logger.debug("데이터베이스 접속이 성공 하였습니다. DB종료는 "+connection.getMetaData().getDatabaseProductName());
-		} catch (SQLException e) {
-			logger.debug("데이터베이스 접속이 실패 하였습니다.");
-			//e.printStackTrace();
-		}
-		 	 }
-	 @Test
-	 public void junitTest() {
-		 //로거는 장점>조건에 따라서 출력을 조정할수 있음.
-		 logger.debug("Junit테스트 시작 입니다.");
-	 }
+		/*
+		 * @Test public void dbConnectionTest() { //데이터베이스 커넥션 테스트: 설정은 root-context의
+		 * 빈(스프링클래스)을 이용 try { Connection connection =dataSource.getConnection();
+		 * logger.debug("데이터베이스 접속이 성공 하였습니다. DB종료는 "+connection.getMetaData().
+		 * getDatabaseProductName()); } catch (SQLException e) {
+		 * logger.debug("데이터베이스 접속이 실패 하였습니다."); //e.printStackTrace(); } }
+		 * 
+		 * @Test public void junitTest() { //로거는 장점>조건에 따라서 출력을 조정할수 있음.
+		 * logger.debug("Junit테스트 시작 입니다."); }
+		 */
 }

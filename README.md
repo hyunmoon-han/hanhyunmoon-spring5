@@ -9,6 +9,33 @@
 - 2달째부터(백엔드), 주로 스프링으로 실습이 진행(납품용-이력서포트폴리오용).
 - VS code에서 만든 UI를 이클립스에서 JSP로 변경 한 후 스프링웹프로젝트를 진행합니다.
 
+#### 20210610(목) 작업예정.
+- 수업전 내용 확인 합니다.(아래)
+- 쿼리실습에서 .equals함수 사용에 대해서 설명할때,아래 isEmpty메서드와 착각해서 이야기 한 내용이 있어서 정정 합니다.
+- 자바에서 객체가 공백 또는 비었는지 비교할때, 예를 들면, 우리프로젝트에서 첨부파일이 있는지 비교할때 아래 처럼 사용하지 않고
+- if(save_file_name != null && "".equals(save_file_name))
+- 다음처럼 짧게(널과공백체크를 한번에) 사용합니다.(아래)
+- if(!save_file_name.isEmpty())
+- =========================================
+- JUnit에서 회원관리 나머지 Read,Update 테스트 진행예정.
+- 업데이트 실습은 회원암호를 스프링시큐리티5 암호화로 일괄변경 실습예정.
+
+```
+BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+String userPwEncoder = passwordEncoder.encode(memberVO.getUser_pw());
+memberVO.setUser_pw(userPwEncoder);
+```
+- 컨트롤러를 이용해서 관리자단 회원관리화면 JSP 만들기 진행예정.
+
+
+#### 20210609(수) 작업.
+- 프로젝트를 진행: 보유기술 70%(솔루션있는업체) + 신기술 30%(개발사도 모릅니다) - 9할 성공
+- PageVO.java 클래스 생성 마무리OK.
+- JUnit에서 위 작업한 내용을 기준으로 selectMember() 테스트 진행ok.(검색,페이징)
+- <![CDATA[ 쿼리 ]]> : 태그 안쪽에 부등호를 사용하기 위해서 문자열 변환 태그를 사용.
+- 쿼리에서 변수와 문자열과의 연결할때는 +(자바)X, ,(X), ||(O)
+- JUnit에서 회원관리 나머지 CRUD 테스트 진행. 암호화도 실습예정
+
 #### 20210608(화) 작업.
 -페이징에 사용되는 변수(쿼리변수+VO변수)아래
 -gueryStartNO ,queryPerPageNum,page,perPageNum,startPage,endPage
@@ -36,9 +63,6 @@ SELECT TableB.* FROM
 -- UI하단의 페이지 선택번호 출력할떄 사용하는 변수 (아래): 
 --- perPagenum 변수로 받아서 startPage,endPage 를 구해서 하단의 페이지선택번호를 출력
 ```
-
-
-
 
 - 스프링코딩 작업순서 1부터6까지(아래)
 - 1. ERD를 기준으로 VO클래스를 생성.

@@ -23,6 +23,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.edu.service.IF_MemberService;
 import com.edu.vo.MemberVO;
+import com.edu.vo.PageVO;
 
 /**
  * 이 클래스는 오라클과 연동해서 CRUD 를 테스트하는 클래스입니다.
@@ -45,7 +46,25 @@ public class DataSourceTest {
 	 //Inject는 자바 8부터 지원, 그럼, 이전 자바7에서는 @Autowired로 객체를 만들었슴
 	 @Inject //MemberService서비스를 주입받아서 객체로 사용합니다(아래)
 	 private IF_MemberService memberService;
-	 
+	 @Test
+	 public void deleteMember()throws Exception{
+		 memberService.deleteMember("user_del");
+		 selectMember();
+	 }
+	 @Test
+	 public void insertMember() throws Exception{
+		 MemberVO memberVO = new MemberVO();
+		 //insert쿼리에 저장할객체
+		 memberVO.setUser_id("user_del");
+		 memberVO.setUser_pw("1234");//스프링시큐리티5버전으로 암호화로 처리예정
+		 memberVO.setEmail("user@tesst.com");
+		 memberVO.setPoint(10);
+		 memberVO.setEnabled(true);
+		 memberVO.setLevels("ROLE_USER");
+		 memberVO.setUser_name("삭제할사용자");
+		 memberService.insertMember(memberVO);
+		 selectMember();
+	 }
 	//스프링 코딩순서:
 	 //M-V-C 사이에 데이터를 입출력하는 임시저장 공간 (VO클래스-멤버변수+get/set메서드) 생성
 	 //보통 ValueObject클래스는 DB테이블과 1:1로 매칭이 됩니다.
@@ -59,7 +78,23 @@ public class DataSourceTest {
 		 	// 변수를 2~3개이상은 바로 String변수로 처리하지 않고, VO만들어 사용.
 		 	// pageVO.java 클래스를 만들어서 페이징 처리변수와 검색어 변수선언,Get/Set생성
 		 	// pageVO만들기전에 SQL쿼리로 가상으로 페이지을 한번 구현해보면서 필요한 변수를 만들어야 합니다.
-		    List<MemberVO> listMember = memberService.selectMember();
+		 	//pageVO 객체를 만들어서가상으로 초기값을 입력합니다.
+		 	PageVO pageVO = new PageVO();
+		 	
+		 	pageVO.setPage(1);//기본값으로 1페이지를 입력합니다.
+		 	pageVO.setPerPageNum(10);//UI하단사용 페이지개수
+		 	pageVO.setQueryPerPageNum(10);//쿼리사용 페이지당개수
+		 	pageVO.setTotalCount(memberService.countMember());//테스트하려고,100명을 입력합니다
+		 	
+		 	pageVO.setSearch_type("user_id");//검색타입  ex) all,user_id,user_name
+		 	pageVO.setSearch_keyword("user_del");//검색어
+		 	//위setTotalCount 위치가 다른설정보다 상단이면,에러발생 왜냐하면/calcPage()가 실행되는데,실행시 위3가지 변수값이 저장되 있어야지 계산메서드가 정상작동되기떄문입니다.
+		 	//위토탈카운트변수값은 startPage,endPage 계산에 필수입니다.
+		 	//정방향:매퍼쿼리 -DAO클래스-sercive클래스-JUnit(나중엔 컨트롤러에서작업)
+		 	//역순으로 작업진행
+		 	//더 진행하기 전에 현재 pageVO객체에는 어떤 값이 들어 있는지 확인하고 사용하겠습니다(아래)
+		 	logger.info("디버그: "+pageVO.toString());
+		    List<MemberVO> listMember = memberService.selectMember(pageVO);
 			listMember.toString();
 	 }
 	

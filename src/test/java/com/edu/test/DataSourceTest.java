@@ -55,14 +55,18 @@ public class DataSourceTest {
 		memberVO.setLevels("ROLE_ADMIN");
 		memberVO.setPoint(100);
 		memberVO.setUser_name("최고관리자");
-		memberVO.setUser_pw("1223");//1사이클 돌린후 암호화로직 적용.
-		//스프링 5시큐리티 암호화적용로직(아래)
+		memberVO.setUser_pw("");//1사이클 돌린후 암호화로직 적용| 입력하지 않으면,업데이트에서제외
+		//메서드내 적용된 객체변수생성
 		BCryptPasswordEncoder passswordEncoder= new BCryptPasswordEncoder();
+		//스프링 5시큐리티 암호화적용로직(아래)
+		if(memberVO.getUser_pw().length()>0 ) {
 		String userPwEncoder = passswordEncoder.encode(memberVO.getUser_pw());
 		memberVO.setUser_pw(userPwEncoder);//암호화된 해시데이터가 memberVO객체 임시저장됨.
+		}
 		memberVO.setUser_id("admin");//수정 조회조건에 사용
+		memberService.updateMember(memberVO);
 		//----------------여기까지는 jsp에서 1명의 회원만 업데이트(수정) 할떄 사용하는 로직
-		//----------------이후부터는 
+		//----------------이후부터는 모든회원중의 시큐리티암호화가 되지않는 자용자만 암호만업데이트
 		//memberService.updateMember(memberVO);//수정  ,1명(admin만)수정->모든회원을 업데이트
 		
 		
@@ -84,6 +88,7 @@ public class DataSourceTest {
 	 				memberService.updateMember(memberOne);//수정  ,1명(admin만)수정->모든회원을 업데이트
 	 		}
 	 	}
+	 	selectMember();
 	 }
 	 @Test
 	 public void readMember() throws Exception{
@@ -132,7 +137,7 @@ public class DataSourceTest {
 		 	pageVO.setPage(1);//기본값으로 1페이지를 입력합니다.
 		 	pageVO.setPerPageNum(10);//UI하단사용 페이지개수
 		 	pageVO.setQueryPerPageNum(1000);//쿼리사용 페이지당개수
-		 	//pageVO.setTotalCount(memberService.countMember());//테스트하려고,100명을 입력합니다
+		 	//pageVO.setTotalCount(memberService.countMember(paveVO));//테스트하려고,100명을 입력합니다
 		 	/*모든 사용자를 출력하지 않고,일부 사용자만 출력할때 아래2필요
 		 	pageVO.setSearch_type("user_id");//검색타입  ex) all,user_id,user_name
 		 	pageVO.setSearch_keyword("user_del");//검색어

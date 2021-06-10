@@ -50,4 +50,17 @@ public class MemberDAOImpl implements IF_MemberDAO{
 		
 	}
 
+	@Override
+	public MemberVO readMember(String user_id) throws Exception {
+		// 데이터베이스 마이비타스 쿼리를 호출(실행)
+		return sqlSession.selectOne("memberMapper.readMember",user_id);// (쿼리위치,태그)
+	}
+
+	@Override
+	public void updateMember(MemberVO memberOne) throws Exception {
+		// DB마이바티스 쿼리호출(아래)
+		sqlSession.update("memberMapper.updateMember", memberOne); //쿼리 위치 ,쿼리값
+		
+	}
+
 }

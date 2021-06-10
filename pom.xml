@@ -12,6 +12,7 @@
 		<org.springframework-version>5.2.5.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.9.0</org.aspectj-version>
 		<org.slf4j-version>1.7.25</org.slf4j-version>
+		<spring.security.version>5.2.3.RELEASE</spring.security.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -117,27 +118,27 @@
 			<scope>test</scope>
 		</dependency>  
 		
-		<!--이후는 기능 추거시 늘어나는 영역 --> 
-		<!-- 스프링 Test사용 -->
+	<!--이후는 기능 추거시 늘어나는 영역 --> 
+	<!-- 스프링 Test사용 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		 <!-- 자바 JDBC사용 -->
-		     <dependency>
+	 <!-- 자바 JDBC사용 -->
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
-			</dependency>
-			<!-- 콘솔에서 SQL로그를 확인하는 용도의 log4jdbc 드라이버추가 -->
-			<dependency>
+		</dependency>
+	<!-- 콘솔에서 SQL로그를 확인하는 용도의 log4jdbc 드라이버추가 -->
+		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 			<version>1.16</version>
 		</dependency>
-			<!-- 마이바티스 모듈 추가 (아래)-->
-			<dependency>
+	<!-- 마이바티스 모듈 추가 (아래)-->
+		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.4.6</version>
@@ -147,7 +148,27 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-			
+	<!-- 스프링시큐리티 확장모듈추가(아래) -->		
+		<dependency>
+		 	<groupId>org.springframework.security</groupId>
+		 	<artifactId>spring-security-core</artifactId>
+			 <version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+		 	<groupId>org.springframework.security</groupId>
+			 <artifactId>spring-security-web</artifactId>
+		 	<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+		 	<groupId>org.springframework.security</groupId>
+		 	<artifactId>spring-security-config</artifactId>
+		 	<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+		 	<groupId>org.springframework.security</groupId>
+		 	<artifactId>spring-security-taglibs</artifactId>
+			 <version>${spring.security.version}</version>
+		</dependency>
 		     	     
 	</dependencies>
     <build>

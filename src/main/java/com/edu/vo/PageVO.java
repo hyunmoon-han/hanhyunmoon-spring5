@@ -30,7 +30,7 @@ public class PageVO {
 	public int getQueryStartNo() {
 		//this.page-1하는 이유는 jsp에서는 1,2,3,...받지만 ,
 		//쿼리에서는 0,1,2,3,...으로 사용되기 때문에 page* 페이지당보여줄개수 
-		queryStartNo = (this.page-1)*queryPerPageNum; // 쿼리에서 시작페이지의 인덱스번호로 사용
+		queryStartNo = (this.page-1); // 쿼리에서 시작페이지의 인덱스번호로 사용   |오라클은 가능하지만,mysql에서는 쿼리를 수정하면 되겠습니다.
 		return queryStartNo;
 	}
 	public void setQueryStartNo(int queryStartNo) {
@@ -59,7 +59,7 @@ public class PageVO {
 	}
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-		//전체개수 값을 지전한 이후 계산식 실행
+		//전체개수 값을 지정한 이후 계산식 실행
 		calcPage();
 	}
 	private void calcPage() {
@@ -74,7 +74,7 @@ public class PageVO {
 		//jsp에서 클릭한 페이지 번호 예로 1부터 10까지는 클릭하면 ,임시 끝 페이지가 10
 		//만약에 11페이지를 클릭하면, 임시 끝페이지가 20.확인 위 tempEnd변수값으로 아래 내용에 이용해서 시작페이지를 계산하게됩니다
 		this.startPage=(tempEnd - this.perPageNum)+1;//UI페이지 하단에 페이지 번호가 출력되도록 하는 반복의 시작변수.
-		//(20-1-)+1= 현재페이지의 UI하단의 시작페이지번호11(시작페이지)
+		//(20-10)+1= 현재페이지의 UI하단의 시작페이지번호11(시작페이지)
 		//예,1~10까지는 page변수를 jsp에 클릭했을때 ,시작페이지가 항상 1페이지,하지만 11 부터20까지 시작페이지가 위계산식을 이용하면 항상 11페이지로 됩니다
 		//위의 startPage변수는 jsp에서 반복문의 시작값으로 사용.   지금 현재 토탈개수는 101개이상
 		if (tempEnd*this.queryPerPageNum > this.totalCount) {

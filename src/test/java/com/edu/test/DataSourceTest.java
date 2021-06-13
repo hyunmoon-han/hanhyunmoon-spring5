@@ -126,7 +126,7 @@ public class DataSourceTest {
 	 @Test
 	 public void selectMember() throws Exception {
 			//회원관리 테이블에서 더미로 입력한 100개의 레코드를 출력 메서드 테스트->회원관리목록이 출력
-		 	//현재100명 검색기능,페이징기능 여기서 구현.1페이지에 10명씩나오게 변경
+		 	//현재100명 검색기능,페이징기능 여기서 구현.1페이지에 10명씩나오게 변경 
 		 	//현재 몇 페이지,검색어 임시저장공간->DB에 페이징 조건,검색조건문
 		 	// 변수를 2~3개이상은 바로 String변수로 처리하지 않고, VO만들어 사용.
 		 	// pageVO.java 클래스를 만들어서 페이징 처리변수와 검색어 변수선언,Get/Set생성
@@ -171,13 +171,13 @@ public class DataSourceTest {
 			 *  for(int cnt=0;cnt<100;cnt++) { //
 			 * stmt.executeQuery("insert into dept02 values ("+cnt+",'디자인부','경기도')"); 
 			 *  }
-			 */		 //인서트,업데이트,삭제시 sql디벨러퍼에서는 커밋이 필수지만,외부 java클래스에서 인서트 할떄는 자동 		커밋됩니다.
+			 */		 //인서트,업데이트,삭제시 sql디벨러퍼에서는 커밋이 필수지만,외부 java클래스에서 인서트 할떄는 자동 커밋됩니다.
 		 
 		 //테이블에 입력되어있는 레코드셋를 select 쿼리 stmt문장으로 가져옴(아래) 
 		 ResultSet rs = stmt.executeQuery("select * from dept order by deptno");//전에작업방식 ,코딩테스트용공부
 		 //위에서 저장된 rs객체를 반복문로 출력(아래)
 		 while(rs.next()){//re객체에 레코드가 없을때까지 반복
-			 logger.debug(rs.getString("deptno")+" " + rs.getString("dname")+ " " 		+rs.getString("loc"));
+			 logger.debug(rs.getString("deptno")+" " + rs.getString("dname")+ " " +rs.getString("loc"));
 			 
 		 }
 		 stmt=null;//메모리 반환

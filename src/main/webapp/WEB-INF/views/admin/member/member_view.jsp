@@ -36,7 +36,7 @@
           <!-- /.card-header -->
           <!-- form start -->
           <!-- 첨부파일을 전송할때 enctype=필수 없으면, 첨부파일이 전송X -->
-          <form id="form_view" name="form_view" action="/admin/member/member_update_form" method="post" enctype="multipart/form-data">
+          <form id="form_view" name="form_view" action="/admin/member/member_update_form" method="get" enctype="multipart/form-data">
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">사용자ID</label>
@@ -77,7 +77,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer text-right">
-              <button type="submit" class="btn btn-primary">수정</button>
+              <button type="submit" class="btn btn-primary">수정폼</button>
               <button type="button" class="btn btn-danger" id="btn_delete">삭제</button>
               <button type="button" class="btn btn-default" id="btn_list">목록</button>
               <!-- 목록으로 이동하려면, pageVO도 가져가야합니다. 또한 삭제/수정은 보안떄문에 URL쿼리 스트링(GET)으로 보내면 x,POST방식으로보내  페이지 변수 다가자가라임마 -->
@@ -103,6 +103,7 @@ $(document).ready(function(){
 		if(confirm("진짜 삭제할겨?진짜?")){
 			//위 컴펀대화상자에서 예,를 누리면 ,아래부분이 실행됨.(아니요,건너뜀)
 			$("#form_view").attr("action","/admin/member/member_delete");
+			$("#form_view").attr("method","post");
 			$("#form_view").submit();
 		}
 	});

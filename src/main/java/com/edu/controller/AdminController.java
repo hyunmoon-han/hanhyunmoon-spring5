@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,16 +32,34 @@ public class AdminController {
 	//이 메서드는 회원 목록을 출려하는 jsp와 매핑이 됩니다.
 	@Inject
 	private IF_MemberService memberService;
+	
 	//아래 경로는 수정처리를 호출=DB를 변경처리
 	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.POST)
-	public String updateMember()throws Exception{
+	public String updateMember(MemberVO memberVO , PageVO pageVO)throws Exception{// (받은값)
+		//update 서비스만 처리하면 끝
 		
-		return null;
-	}
+		//엡데이트 쿼리 서브스 호출하기 전 스프링시큐리티 암호화 저적용합니다.
+		String rawPassword = memberVO.getUser_pw();
+		if(!rawPassword.isEmpty()) {//수정폼에서 암호 입력값이 비어있지 않을떄만 아래로직실행
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encPassword =passwordEncoder.encode(rawPassword);
+		memberVO.setUser_pw(encPassword);
+		}
+		//이 메서드는 수정 처리 이후 보인 페이지에 있습니다
+		memberService.updateMember(memberVO);//반환값이 없습니다.
+		//redirect로 페이지를 이동하면,model로 담아서 보낼수 없습니다.아래처럼 쿼리스트링(URL?)으로 보냅니다.
+		String queryString = "user_id="+memberVO.getUser_id()+"&page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type()+"&search_keyword="+pageVO.getSearch_keyword();
+		return "redirect:/admin/member/member_update_form?"+queryString;//
+		}
+	
 	//아래 경로는 수정폼을 호출=화면에 출력만=렌더링만
-	@RequestMapping(value="/admin/member/member_update_form",method=RequestMethod.POST)
-	public String updateMemberForm()throws Exception{
-		
+	@RequestMapping(value="/admin/member/member_update_form",method=RequestMethod.GET) //아래 보넬떄,받을떄
+	public String updateMemberForm(MemberVO memberVO,Model model,@ModelAttribute("pageVO")PageVO pagoVO)throws Exception{
+		//이 메서드는 수정폼에 pageVO,memberVO2개의 데이터객체를 jsp로 보넵니다.
+		//사용자 1명의 레코드를 가져오는 멤버서비스(쿼리)를 실행(아래)
+		MemberVO memberView =memberService.readMember(memberVO.getUser_id());
+		//사용자1명의 레코드를 model에 담아서 +@Modelatteibute에 담아서 jsp로 보냅니다.
+		model.addAttribute("memberVO",memberView);
 		return "admin/member/member_update";//상대경로
 	}
 	@RequestMapping(value="/admin/member/member_delete",method=RequestMethod.POST)//호출

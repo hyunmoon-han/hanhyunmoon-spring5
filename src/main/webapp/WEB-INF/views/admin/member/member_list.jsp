@@ -74,12 +74,12 @@
               </tr>
               </c:if>
                 <!-- jstl 반복문으로 listMember객체 바인딩 -->
-                <c:forEach var="memberVO" items="${listMember}">    <!-- 담을객체 객체  var 은 맘대로지정| 아래페이지로 호출할떄 user_id값을가저감-->  
-	                <tr style="cursor: pointer;" onclick="location.replace('/admin/member/member_view?page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}&user_id=${memberVO.user_id}');">
-	                  <td><c:out value="${memberVO.user_id}"/></td>
-	                  <td><c:out value="${memberVO.user_name}"/></td>
-	                  <td><c:out value="${memberVO.email}"/></td>
-	                  <td>${memberVO.levels}"</td>
+                 <c:forEach var="memberVO" items="${listMember}">  <!-- 담을객체 객체  var 은 맘대로지정| 아래페이지로 호출할떄 user_id값을가저감-->  
+	               <tr style="cursor: pointer;" onclick="location.replace('/admin/member/member_view?page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}&user_id=${memberVO.user_id}');">
+		              <td><c:out value="${memberVO.user_id}" /></td>
+	                  <td><c:out value="${memberVO.user_name}" /></td>
+	                  <td><c:out value="${memberVO.email}" /></td>
+	                  <td>${memberVO.levels}</td>
 	                  <td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss.SSSS" value="${memberVO.reg_date}"/></td>
 	                </tr>
                 </c:forEach>

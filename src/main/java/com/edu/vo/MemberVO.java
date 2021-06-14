@@ -21,6 +21,8 @@ public class MemberVO {
 	private String levels;
 	private Date reg_date;
 	private Date update_date;
+	
+	
 	//책에서는 롬복 lombok.jar을 사용해서 아래내용을 생략가능합니다.
 	//우리는 롬복을 사용하지 않고, Get.Set을 만들어서 사용합니다.
 	public String getUser_id() {
@@ -78,4 +80,10 @@ public class MemberVO {
 		this.update_date = update_date;
 	}
 	
+	@Override
+	public String toString() {
+		return "MemberVO [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", email=" + email
+				+ ", point=" + point + ", enabled=" + enabled + ", levels=" + levels + ", reg_date=" + reg_date
+				+ ", update_date=" + update_date + "]";
+	}
 }

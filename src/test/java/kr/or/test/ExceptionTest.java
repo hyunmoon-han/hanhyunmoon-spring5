@@ -31,6 +31,9 @@ public class ExceptionTest {
 			}catch(NumberFormatException ex) {//Exception대신에 선별적으로 예외사항을 잡습니다.
 				System.out.println(cnt+ " 번째 숫자 형태가 올바르지 않습니다.확인해주세요");
 				System.out.println("에러내용은:" + ex.toString());
+			} catch(ArrayIndexOutOfBoundsException ex) {
+				System.out.println(ex.toString());
+				System.out.println("에러내용은 배열의 크기가 올바르지 않습니다.");	
 			}finally {
 				System.out.println(cnt+ " 번째프로그램이 종료 되었습니다.");
 			}

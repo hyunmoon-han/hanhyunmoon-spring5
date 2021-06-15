@@ -25,17 +25,33 @@
 - ======== 2주간 작업내역 끝(07.16금) ===================
 - 헤로쿠 클라우드에 배포할때, 매퍼폴더의 mysql폴더내의 쿼리에 now()를 date_add(now(3), interval 9 HOUR) 변경예정.(이유는 DB서버 타임존 미국이기 때문에)
 
-#### 20210614(월) 작업.
-- 수업 전 관리자 회원관리 view화면구현 마무리.
-- multipart(첨부파일기능떄문에) 라는 폼태그 전송방식을 추가.->commons.fileupload외부모듈필수(pom.xml에서 의존성을 추가합니다.)
-- 위 외부모듈을 스프링 빈으로 등록합니다.(servlet-context.xml 하단에 추가)
-- CRUD에서 mulripart를 사용한다면, 리졸브(resolve-해석기)
-- 나머지 관리자 회원관리 CRUD 화면 JSP구현 update, delete , insert
+#### 20210616(수)
+- [공지]06-17 목요일(4교시) UI 디자인 시험 있습니다.(화면기획서XLS제작, 화면설계서PPT제출용) 확인 후 수업진행.
+- 관리자단 게시판 생성관리 CRUD 처리.(3.AOP기능구현).
+- 관리자단 게시물관리 CRUD 처리(4.파일업로드구현,5.트랜잭션구현).
+
+#### 20210615(화) 작업.
+- 관리자단 회원관리 수정 암호 수정 잘 되는지 확인.
+- 회원관리 CRUD 화면 JSP구현 update(OK), delete(OK) , insert(예정)
 - [공지]06-17 목요일(4교시) UI 디자인 시험 있습니다.(화면기획서XLS제작, 화면설계서PPT제출용)
-- 관리자 게시판 생성관리 CRUD 정방향 방식으로 JSP구현.
 
 
-#### 20210611(금) 작업예정
+#### 20210614(월) 작업.
+- 수업 전 관리자 회원관리 view화면구현 마무리OK.
+- multipart(첨부파일기능) 라는 폼태그 전송방식을 추가 -> commons.fileupload 외부모듈필수(pom.xml에서 의존성을 추가합니다.)
+- 위 외부모듈을 스프링 빈으로 등록합니다.(servlet-context.xml 하단에 추가)
+- CRUD에서 multipart를 사용한다면, 리졸브(resolve-해석기) 스프링빈이 필요
+
+```
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   </beans:bean>
+```
+- GET : Insert (외부 사이트 입력폼에서도 입력가능 ,불가능 검색용으로) -  쿼리스트링으로 데이터를 전송-ULR?key=value&key2=value2
+- POST : Insert (외부 사이트에서 입력불가능,같은사이트의 입력폼에서 가능,입력수정삭제가능,CRUD처리) - form의 입력태그(히든스트링)로 데이터전송
+- 나머지 관리자 회원관리 CRUD 화면 JSP구현 update(OK), delete(OK)
+
+
+#### 20210611(금) 작업.
 - 수업전 관리자단 회원관리 페이징처리에서 컨트롤러와 calcPage()메서드의 관계 간단하게 확인하겠습니다
 - JSTL : Jave Standard Tag Library 자바표준태그모듈로서 JSP에서 자바를 사용하는 표준.
 - taglib uri(유니폼 리소스 ID-의미가있는 고유값=식별값) > url(링크경로)

@@ -33,12 +33,28 @@ public class AdminController {
 	@Inject
 	private IF_MemberService memberService;
 	
+	//아래경로는 회원신규 등록 폼을 호출하는 URL쿼리스트링으로 보넨것을 받을떄는 GET방식으로 받습니다.
+	@RequestMapping(value ="/admin/member/member_insert_form",method=RequestMethod.GET)
+	public String insertmemberForm(@ModelAttribute("pageVO")PageVO pageVO)throws Exception{//폼호출했을떄아래값
+		
+		return "admin/member/member_insert";//jsp생략 ,상대경로
+	}
+	//아래경로는 회원 신규 등록을 처리하는 서비스를 호출하는 URL
+	@RequestMapping(value ="/admin/member/member_insert",method=RequestMethod.POST)
+	public String insertmember(PageVO pageVO,MemberVO memberVO)throws Exception{//인서트에서온값	
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String rawPassword = memberVO.getUser_pw();//원시 페스워드값
+		String encPassword = passwordEncoder.encode(rawPassword);
+		memberVO.setUser_pw(encPassword);
+		memberService.insertMember(memberVO);
+		return "redirect:/admin/member/member_list";//.jsp는 생략
+	} 
 	//아래 경로는 수정처리를 호출=DB를 변경처리
 	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.POST)
 	public String updateMember(MemberVO memberVO , PageVO pageVO)throws Exception{// (받은값)
 		//update 서비스만 처리하면 끝
 		
-		//엡데이트 쿼리 서브스 호출하기 전 스프링시큐리티 암호화 저적용합니다.
+		//업데이트 쿼리 서비스 호출하기 전 스프링시큐리티 암호화 적용합니다.
 		String rawPassword = memberVO.getUser_pw();
 		if(!rawPassword.isEmpty()) {//수정폼에서 암호 입력값이 비어있지 않을떄만 아래로직실행
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -58,8 +74,8 @@ public class AdminController {
 		//이 메서드는 수정폼에 pageVO,memberVO2개의 데이터객체를 jsp로 보넵니다.
 		//사용자 1명의 레코드를 가져오는 멤버서비스(쿼리)를 실행(아래)
 		MemberVO memberView =memberService.readMember(memberVO.getUser_id());
-		//사용자1명의 레코드를 model에 담아서 +@Modelatteibute에 담아서 jsp로 보냅니다.
-		model.addAttribute("memberVO",memberView);
+		//사용자1명의 레코드를 model에 담아서 +@Model.attribute에 담아서 jsp로 보냅니다.
+		model.addAttribute("memberVO",memberView);//네임,value ->네임이라는 이름으로 value객체를추가
 		return "admin/member/member_update";//상대경로
 	}
 	@RequestMapping(value="/admin/member/member_delete",method=RequestMethod.POST)//호출

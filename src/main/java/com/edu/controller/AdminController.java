@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.edu.service.IF_BoardTypeService;
 import com.edu.service.IF_MemberService;
+import com.edu.vo.BoardTypeVO;
 import com.edu.vo.MemberVO;
 import com.edu.vo.PageVO;
 
 /**
- * 이 클래스는 Admin관리자단을 접근하는 클래스
+ * 이 클래스는 Admin관리자단을 접근하는 콘트롤러 클래스<-디스패처 서블렛(게이트웨이)기능을 합니다
+ * 디스패처 서블렛 클래스는 톰캣이 생행될때 제일 먼저 실행되는 클래스,그래서,게이트웨이라고합니다.
+ * //디스페어 서블릿 실행될떄,컨트롤러의 Request매핑경로를 재등록합니다
  * 변수 Object를 만들어서 jsp로 전송 <-> jsp 폼값을 받아서  Object로처리
  * @author 한현문
  *
@@ -32,18 +36,60 @@ public class AdminController {
 	//이 메서드는 회원 목록을 출려하는 jsp와 매핑이 됩니다.
 	@Inject
 	private IF_MemberService memberService;
+	@Inject
+	private IF_BoardTypeService boardTypeService;
+	//jsp에서 게시판 생성관리에 GET/POST이든 접근할떄URL을 bbs_type로 지정합니다.
+	//왜board_type하지않고,bbs_type하는 이유는 왼쪽메뉴 고정시키는 로직에서 경로가 board와 겹치지 않도록.
+	@RequestMapping(value="/admin/bbs_type/bbs_type_list", method=RequestMethod.GET)
+	public String selectBoardTypeList(Model model)throws Exception{//목록폼1
+		model.addAttribute("listBoardTypeVO",boardTypeService.selectBoardType());
+		return "admin/bbs_type/bbs_type_list";//상대경로일대는 view폴더가 root(최상위)
+	}
+	//bbs_type_list.jsp에서 게시판생성버튼을 클랙했을떄 이동하는 폼  경로
+	@RequestMapping(value="/admin/bbs_type/bbs_type_insert", method=RequestMethod.GET)
+	public String insertBoardTypeFrom()throws Exception{//입력폼1
+		return "admin/bbs_type/bbs_type_insert";//.jsp생략
+	}
+	//bbs_type_insert.jsp의 입력폼에서 전송된 값을  boardTypeeVO 자동으로 담겨서  {구현}  단, 자동으로 값이 바인딩되려면 ,폼name과,VO벰버변수명 동일해야함
+	@RequestMapping(value="/admin/bbs_type/bbs_type_insert", method=RequestMethod.POST)
+	public String insertBoardType(BoardTypeVO boardTypeVO)throws Exception{//입력처리1
+		boardTypeService.insertBoardType(boardTypeVO);
+		return "redirect:/admin/bbs_type/bbs_type_list";
+		//redirect는 절대경로 (뒤로가기-데이터가사라짐).forward도 이동이 가능(뒤로가기-데이터가 살아있음)
+		//쇼핑몰에서 결제화면을 처리 후 뒤로가기를 누르면, 리다이렉트는 데이터가 사라지기 떄문에 재결제 불가
+		//forward로 결제화면을 처리후 뒤로가기를 누르면,재결제가 발생됩니다.이러면 않되기 떄문에 사용않함.
+	}
+	//게시판 생서관리는 이 기능은 사용자단에서 UI를 사용할 일이 없기 떄문에,Read,Update를 1개로 사용
+	@RequestMapping(value="/admin/bbs_type/bbs_type_update", method=RequestMethod.GET)
+	public String updateBoardTypeFrom(@RequestParam("board_type")String board_type,Model model)throws Exception{//수정폼1
+		model.addAttribute("boardTypeVO",boardTypeService.readBoardType(board_type));///서식-model.addAttributes("jsp변수","데이터객체");
+		//서식model.add~("jsp변수-변수로담아서view화면으로 보넴",서비스에서 쿼리실행한 데이터객체);
+		return "admin/bbs_type/bbs_type_update";//.jsp생략
+	}
+	@RequestMapping(value="/admin/bbs_type/bbs_type_update", method=RequestMethod.POST)
+	public String updateBoardType(BoardTypeVO boardTypeVO)throws Exception{//수정처리1
+		boardTypeService.updateBoardType(boardTypeVO);
+		return "redirect:/admin/bbs_type/bbs_type_update?board_type="+boardTypeVO.getBoard_type();//수정한 이후 수정폼을 GET방식으로 이동
+	}
+	@RequestMapping(value="/admin/bbs_type/bbs_type_delete", method=RequestMethod.POST)
+	public String deldeteBoardType(@RequestParam("board_type")String board_type)throws Exception{//삭제처리1
+		boardTypeService.deleteBoardType(board_type);//삭제서비스호출(실행) 끝
+		return "redirect:/admin/bbs_type/bbs_type_list";//.jsp생략
+	}
+	//-------------------------------------------------------------
 	
 	//아래경로는 회원신규 등록 폼을 호출하는 URL쿼리스트링으로 보넨것을 받을떄는 GET방식으로 받습니다.
-	@RequestMapping(value ="/admin/member/member_insert_form",method=RequestMethod.GET)
+	@RequestMapping(value ="/admin/member/member_insert_form",method=RequestMethod.POST)
 	public String insertmemberForm(@ModelAttribute("pageVO")PageVO pageVO)throws Exception{//폼호출했을떄아래값
 		
 		return "admin/member/member_insert";//jsp생략 ,상대경로
 	}
+	
 	//아래경로는 회원 신규 등록을 처리하는 서비스를 호출하는 URL
 	@RequestMapping(value ="/admin/member/member_insert",method=RequestMethod.POST)
 	public String insertmember(PageVO pageVO,MemberVO memberVO)throws Exception{//인서트에서온값	
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String rawPassword = memberVO.getUser_pw();//원시 페스워드값
+		String rawPassword = memberVO.getUser_pw();//원시 패스워드값
 		String encPassword = passwordEncoder.encode(rawPassword);
 		memberVO.setUser_pw(encPassword);
 		memberService.insertMember(memberVO);

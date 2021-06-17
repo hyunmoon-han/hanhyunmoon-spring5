@@ -42,7 +42,8 @@ public class AdminController {
 	//왜board_type하지않고,bbs_type하는 이유는 왼쪽메뉴 고정시키는 로직에서 경로가 board와 겹치지 않도록.
 	@RequestMapping(value="/admin/bbs_type/bbs_type_list", method=RequestMethod.GET)
 	public String selectBoardTypeList(Model model)throws Exception{//목록폼1
-		model.addAttribute("listBoardTypeVO",boardTypeService.selectBoardType());
+		//아래모델은 AOP기능중 ControllerAdvice인터페이스로 구현했기 때문에 아래는 실행안함
+		//		model.addAttribute("listBoardTypeVO",boardTypeService.selectBoardType()); 참견으로만들어놈
 		return "admin/bbs_type/bbs_type_list";//상대경로일대는 view폴더가 root(최상위)
 	}
 	//bbs_type_list.jsp에서 게시판생성버튼을 클랙했을떄 이동하는 폼  경로
@@ -79,7 +80,7 @@ public class AdminController {
 	//-------------------------------------------------------------
 	
 	//아래경로는 회원신규 등록 폼을 호출하는 URL쿼리스트링으로 보넨것을 받을떄는 GET방식으로 받습니다.
-	@RequestMapping(value ="/admin/member/member_insert_form",method=RequestMethod.POST)
+	@RequestMapping(value ="/admin/member/member_insert_form",method=RequestMethod.GET)
 	public String insertmemberForm(@ModelAttribute("pageVO")PageVO pageVO)throws Exception{//폼호출했을떄아래값
 		
 		return "admin/member/member_insert";//jsp생략 ,상대경로

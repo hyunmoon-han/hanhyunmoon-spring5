@@ -22,7 +22,7 @@ public class BoardTypeServiceImpl implements IF_BoardTypeService{
 	@Override //부모super 인터페이스의 메서드를 상속받아서Override 재정의 합니다
 	public void deleteBoardType(String board_type) throws Exception {
 		// TODO DAO클래스 객체를 이용해서 메서드를 호출(실행)
-		boardTypeDAO.deleteBoardType( board_type);	
+		boardTypeDAO.deleteBoardType(board_type);	
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class BoardTypeServiceImpl implements IF_BoardTypeService{
 	@Override
 	public BoardTypeVO readBoardType(String board_type) throws Exception {
 		// TODO 실행결과반환 readBoardType(아래실행에필요한변수=매개변수,파라미터,인자,아규먼트)
-		return boardTypeDAO.readBoardType(board_type);//인자받아서쓰고 BoardTypeVO담아서반환?
+		return boardTypeDAO.readBoardType(board_type);//인자를 받아서 BoardTypeVO담아서 반환
 	}
 
 	@Override

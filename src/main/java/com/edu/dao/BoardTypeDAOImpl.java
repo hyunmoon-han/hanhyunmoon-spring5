@@ -30,7 +30,7 @@ public class BoardTypeDAOImpl implements IF_BoardTypeDAO {
 	@Override
 	public void updateBoardType(BoardTypeVO boardTypeVO) throws Exception {
 		// TODO 아래주석동일
-		sqlSession.update("voardTypeMapper.updateBoardType",boardTypeVO);
+		sqlSession.update("boardTypeMapper.updateBoardType",boardTypeVO);
 	}
 
 	@Override

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper"> <!-- 다른데서 쓸데 네임스페이스 필요 -->
+<!-- bno필드 변수가 자동증가가 되는 기능이 필요  seq.nextVal-->
+<insert id="insertBoard">
+	<selectKey keyProperty="seq_bno" resultType="int" order="BEFORE">  <!-- 101값이 bno값에담벼겨 벨류 아래bno로담김 ,순서는 인서트보다 셀렉트먼저실행-->
+	select seq_bno.nextval from dual
+	</selectKey>
+	insert into tbl_board 
+	(
+	bno,title,content,writer,reg_date,board_type
+	)
+	value 
+	(
+	#{seq_bno},#{title},#{content},#{writer},systimestamp,#{board_type}
+	)
+
+</insert>
+<!-- 페이징처리떄문에 중첩쿼리 생성 (아래) -->
+<select id="selectBoard" resultType="com.edu.vo.BoardVO"> <!-- 이걸로 반환받을거야 -->
+select table_b.* from
+(
+	select rownum as rnum,table_a.*from
+	(
+		select * from tbl_board
+		<include refid="sqlWhere"/><!-- 훼어조건1 -->
+	) table_a
+<![CDATA[
+	where rownum <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
+) table_b where table_b.rnum > #{queryStartNo}*#{queryPerPageNum}
+]]>
+</select>
+<!-- 검색처리는 맴버쿼리에서 작성한 내용 붙여넣기. 다중게시판용 필드 조회조건 추가예정 -->
+<sql id="sqlWhere">
+<if test= "search_type !='' and search_type !=null">
+     WHERE 
+     	
+     	<if test="search_type == 'all'.toString()">
+      		title LIKE '%'||#{search_keyword}||'%'
+      		OR content LIKE '%'||#{search_keyword}||'%'
+     	</if>
+     	<if test="search_type == 'title'.toString()">
+      		title LIKE '%'||#{search_keyword}||'%'
+     	</if>
+     	<if test="search_type == 'content'.toString()">
+      		content LIKE '%'||#{search_keyword}||'%'
+     	</if>
+     </if>
+</sql>
+
+</mapper>

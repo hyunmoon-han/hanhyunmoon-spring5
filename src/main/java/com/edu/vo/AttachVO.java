@@ -11,9 +11,14 @@ public class AttachVO {
 	private String save_file_name;//UUID클래스(고유해시데이터를 생성하는클래스)로 생성예정 ,실제 저장된 파일명 으로 사용
 	private String real_file_name;//화면에 보이는 파일명
 	private Date reg_date; //첨부파일 저장일시
-	private int bno;//외래키FK-게시물번호 
-	
-	
+	private Integer bno;//외래키FK-게시물번호 
+		
+	public Integer getBno() {
+		return bno;
+	}
+	public void setBno(Integer bno) {
+		this.bno = bno;
+	}
 	public String getSave_file_name() {
 		return save_file_name;
 	}
@@ -32,11 +37,5 @@ public class AttachVO {
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
-	public int getBno() {
-		return bno;
-	}
-	public void setBno(int bno) {
-		this.bno = bno;
-	}
-	
+		
 }

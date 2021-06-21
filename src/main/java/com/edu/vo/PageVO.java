@@ -39,8 +39,10 @@ public class PageVO {
 	
 	public int getQueryStartNo() {
 		//this.page-1하는 이유는 jsp에서는 1,2,3,...받지만 ,
-		//쿼리에서는 0,1,2,3,...으로 사용되기 때문에 page* 페이지당보여줄개수 
-		queryStartNo = (this.page-1); // 쿼리에서 시작페이지의 인덱스번호로 사용   |오라클은 가능하지만,mysql에서는 쿼리를 수정하면 되겠습니다.
+		//쿼리에서는 0,1,2,3,...으로 사용되기 때문에 page* 페이지당보여줄개수  .우리가 보이는것은 1페이지부터지만 실제는 -1페이지
+		queryStartNo = (this.page-1)*queryPerPageNum; // 쿼리에서 시작페이지의 인덱스번호로 사용   |
+		//queryStartNo = (this.page-1)오라클은 가능하지만,mysql에서는 쿼리를 수정하면 되겠습니다.
+		//System.out.println("디버그3: "+ queryStartNo);
 		return queryStartNo;
 	}
 	public void setQueryStartNo(int queryStartNo) {

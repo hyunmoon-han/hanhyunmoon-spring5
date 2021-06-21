@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper"> <!-- 다른데서 쓸데 네임스페이스 필요 -->
 <!-- 첨부파일 CRUD 쿼리 생성 ,주,우리로직에서는 첨부파일은 수정x,입력/삭제o-->
-<!-- 춤부파일 삭제는 1개만 섹제하지 않고, 게시물별(bno) 일괄삭제도 있음 -->
+<!-- 첨부파일 삭제는 1개만 삭제하지 않고, 게시물별(bno) 일괄삭제도 있음 -->
 <delete id="deleteAttachAll">
 delete from tbl_attach where bno=#{bno}
 </delete>
@@ -13,8 +13,13 @@ delete from tbl_attach where save_file_name=#{sava_file_name}
 
 <!-- 왜 수정이 없는가 ->저장된 파일을  수정못하고,신규파일을 덮어씁니다.단,bno를 매게변수로받습니다.(수정이기떄문에)-->
 <insert id="updateAttach">
-insert into tbl_attach (save_file_name,real_file_name,reg_date,bno)
-values (#{save_file_name},#{real_file_name},sysdate,#{bno})
+insert into tbl_attach (
+save_file_name,real_file_name,reg_date,bno
+)
+values 
+(
+#{save_file_name},#{real_file_name},sysdate,#{bno}
+)
 </insert>
 
 <select id="readAttach" resultType="com.edu.vo.AttachVO">
@@ -93,10 +98,11 @@ select table_b.* from
 	(
 		select * from tbl_board
 		<include refid="sqlWhere"/><!-- 훼어조건1 -->
+		order by bno desc<!-- bno기준 역순정렬 -->
 	) table_a
 <![CDATA[
-	where rownum <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
-) table_b where table_b.rnum > #{queryStartNo}*#{queryPerPageNum}
+	where rownum <= #{queryStartNo}+#{queryPerPageNum}
+) table_b where table_b.rnum > #{queryStartNo}
 ]]>
 </select>
 <!-- 검색처리는 맴버쿼리에서 작성한 내용 붙여넣기. 다중게시판용 필드 조회조건 추가PageVO에도 -->

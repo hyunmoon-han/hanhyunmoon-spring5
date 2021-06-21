@@ -86,7 +86,7 @@ public class BoardDAOImpl implements IF_BoardDAO{
 
 	@Override
 	public int insertBoard(BoardVO boardVO) throws Exception {
-		// TODO 아래주석동일 +게시물 이볅후 반환값으로 bno를 받습니다.
+		// TODO 아래주석동일 +게시물 입력후 반환값으로 bno를 받습니다.
 		sqlSession.insert("boardMapper.insertBoard", boardVO);
 		logger.info("디버그:"+boardVO.getBno());
 		return boardVO.getBno();

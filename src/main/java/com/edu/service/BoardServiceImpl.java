@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.dao.IF_BoardDAO;
 import com.edu.vo.AttachVO;
@@ -31,7 +32,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		// TODO 페이징처리시 pageVO의 totalCount변수에 사용될 값을 리턴값으로받음.
 		return boardDAO.countBoard(pageVO);
 	}
-
+	@Transactional
 	@Override
 	public void deleteBoard(int bno) throws Exception {
 		// TODO 게시물 삭제할떄,여기서는 3개의 메서드가 실행(댓글+첨부파일삭제+게물삭제)
@@ -43,7 +44,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		boardDAO.deleteBoard(bno);
 		//*댓글삭제는 나중에
 	}
-
+	@Transactional //All or NotAll
 	@Override
 	public void updateBoard(BoardVO boardVO) throws Exception {
 		// TODO 첨부파일이 있으면 updateAttach -> 게시물 업데이트updateBpard
@@ -65,7 +66,7 @@ public class BoardServiceImpl implements IF_BoardService {
 			index=index+1;//index++
 		}
 	}
-
+	@Transactional
 	@Override
 	public BoardVO readBoard(int bno) throws Exception {
 		// TODO 게시물 상세보기시  실행순서readBoadr ->updateViewCount 2개의 메서드가 필요
@@ -73,7 +74,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		boardDAO.updateViewCount(bno);
 		return boardVO;
 	}
-
+	@Transactional
 	@Override
 	public void insertBoard(BoardVO boardVO) throws Exception {
 		// TODO 부모 게시물 insertBoard실행->자식 첨부파일 있으면 첨부파일 insertAttach
@@ -92,7 +93,7 @@ public class BoardServiceImpl implements IF_BoardService {
 			attachVO.setBno(bno);
 			attachVO.setReal_file_name(real_file_name);
 			attachVO.setSave_file_name(save_file_name);
-			boardDAO.insertAttach(null); 
+			boardDAO.insertAttach(attachVO); 
 			index++;
 		}
 	}

@@ -61,7 +61,7 @@ where bno =#{bno}
 <!-- 아래뷰카운터는 게시물 상세보기시 카운트 증가 ,예 유튜브조회수증가와비슷 -->
 <update id="updateViewCount">
 update tbl_board set
-view_count = bvl(view_count,0)+1  <!-- view_count가 null일수도있기떄문에 nvl(,0)추가 -->
+view_count = nvl(view_count,0)+1  <!-- view_count가 null일수도있기떄문에 nvl(,0)추가 -->
 where bno=#{bno}
 </update>
 <select id="readBoard" resultType="com.edu.vo.BoardVO">

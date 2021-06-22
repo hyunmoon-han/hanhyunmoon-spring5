@@ -65,7 +65,9 @@ public class AspectAdvice {
 			}
 			if(session.getAttribute("session_board_type") != null) {
 				board_type=(String) session.getAttribute("session_board_type");
-				pageVO.setBoard_type(board_type);//검색달성:여기서 항상 값을 가져가도록 구현됩니다 .dao까지전달 selectboard,pageVO까지.
+				if(pageVO !=null) {
+					pageVO.setBoard_type(board_type);//검색달성:여기서 항상 값을 가져가도록 구현됩니다 .dao까지전달 selectboard,pageVO까지.
+				}
 			}
 			logger.info("디버그19: "+(String) session.getAttribute("session_board_type"));
 		}

@@ -83,7 +83,7 @@
               <!-- 목록으로 이동하려면, pageVO도 가져가야합니다. 또한 삭제/수정은 보안떄문에 URL쿼리 스트링(GET)으로 보내면 x,POST방식으로보내  페이지 변수 다가자가라임마 -->
               <input type="hidden" name="page" value="${pageVO.page}">
               <input type="hidden" name="search_type" value="${pageVO.search_type}">
-              <input type="hidden" name="search_keyword" value="${pageVO.search_keyword}">
+             <%--  <input type="hidden" name="search_keyword" value="${pageVO.search_keyword}"> --%>
               <input type="hidden" name="user_id" value="${memberVO.user_id}">
             </div>
           </form>
@@ -100,7 +100,7 @@
 <script>
 $(document).ready(function(){
 	$("#btn_delete").click(function(){
-		if(confirm("진짜 삭제할겨?진짜?")){
+		if(confirm("정말로 삭제하시겠습니까?")){
 			//위 컴펀대화상자에서 예,를 누리면 ,아래부분이 실행됨.(아니요,건너뜀)
 			$("#form_view").attr("action","/admin/member/member_delete");
 			$("#form_view").attr("method","post");
@@ -108,7 +108,7 @@ $(document).ready(function(){
 		}
 	});
 	$("#btn_list").click(function(){
-		var queryString ='page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}';
+		var queryString ='page=${pageVO.page}&search_type=${pageVO.search_type}';
 		//alert(queryString);//디버그
 		location.replace('/admin/member/member_list?'+queryString);
 	});

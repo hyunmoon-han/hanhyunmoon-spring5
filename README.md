@@ -39,7 +39,8 @@ List<AttachVO> delFiles = [ 뽑아낼때 getAttachVO '키'값
 오늘 수업중 다른것 이해 보다, 위 내용이 핵심 입니다. RestAPI시 Json데이터와 같은 구조 이기 때문에 중요합니다.
 
 - file.getBytes() 설명 포함 board_update메서드 리뷰 후 수업진행.
-- 작업순서: CRUD -> UC 작업.
+- 작업순서: CRUD -> U 작업.
+- Create 작업
 - update: updateBoard(서비스)참조 -> board_update(컨트롤러)작업+jsp작업
 - 업데이트 이후엔 파일업로드 구현 후 /download 컨트롤러 실습예정.
 - 관리자단 댓글관리 CRUD 처리(6.RestAPI서버구현,JUnit대신에 크롬부메랑으로 테스트)

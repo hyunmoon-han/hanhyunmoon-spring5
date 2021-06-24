@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.edu.dao.IF_BoardDAO;
 import com.edu.service.IF_MemberService;
 import com.edu.vo.MemberVO;
 
@@ -41,7 +45,8 @@ public class CommonUtil {
 	private Logger logger =LoggerFactory.getLogger(CommonUtil.class);
 	@Inject
 	private IF_MemberService memberService;//스프링 빈을 주입 받아서(DI) 객체준비 
-	
+	@Inject
+	private IF_BoardDAO boardDAO;
 	
 	//첨부파일 업로드/다운로드/삭제/인서트/수정에 모두 사용될 저장경로를 1개 지정해서 전역으로사용
 	@Resource(name="uploadPath")
@@ -50,6 +55,38 @@ public class CommonUtil {
 	public String getUploadPath() {
 		return uploadPath;
 	}
+	
+	//첨부파일 개별삭제Ajax로 받아서 처리,@ResponseBody사용
+	@RequestMapping(value="/file_delete", method=RequestMethod.POST)
+	@ResponseBody
+	public String file_delete(@RequestParam("save_file_name")String save_file_name)  {//throws Exception 지우는 이유:Ajax는 예외처리를 스프링에 던지지 않고 직접try~catch문으로 처리.
+		String result="";//Ajax로 보내는 값변수
+		try {
+			boardDAO.deleteAttach(save_file_name);//DB에서삭제
+			File target=new File(uploadPath+"/"+save_file_name);
+			if(target.exists()) {
+				target.delete();
+			}
+			result="success";
+		} catch (Exception e) {
+			result="fail:"+e.toString();		
+		}
+		return result;
+	}
+	
+	//다운로드처리도 같은 페이지에서 결과값만 반환받는 @ResponsBody 사용
+	@RequestMapping(value="/download",method=RequestMethod.GET)
+	@ResponseBody
+	public FileSystemResource download(@RequestParam("save_file_name")String save_file_name,@RequestParam("real_file_name")String real_file_name,HttpServletResponse response)throws Exception{//HttpServletResponse response 이런식으로 인자를 받으면 메서드 안에서new객체를 만들필요없음
+		//FileS..은 스프링 코어에서 제공하는 전용  파일 처리클래스
+		File file=new File(uploadPath + "/"+save_file_name);
+		response.setContentType("application/download; utf-8");//아래한글,ppt문서등에서 한글이꺠지는것을 방지하는 코드입니당~
+		real_file_name = URLEncoder.encode(real_file_name);//ie에서 URL한글일떄 에러발생방지코드추가
+		response.setHeader("Content-Disposition", "attachment; filename="+real_file_name);
+		
+		return new FileSystemResource(file);
+	}
+	
 	//페이지 이동이 아닌 같은 페이지에 결과값만 반환하는 @ResponseBody
 	@RequestMapping(value="/image_preview",method=RequestMethod.GET)
 	@ResponseBody
@@ -94,7 +131,7 @@ public class CommonUtil {
  		default:break;	
  		}
  		
-//		return new ResponseEntity<byte[]>(fileArray);//객체생성시 초기값(rawData,)
+		return new ResponseEntity<byte[]>(fileArray,headers,HttpStatus.CREATED);//객체생성시 초기값(rawData,헤더정보,HTTP상태값)
 	}
 	//XSS 크로스사이트스크립트 방지용 코드로 파싱하는 메서드(아래)
 	public String unScript(String data) {

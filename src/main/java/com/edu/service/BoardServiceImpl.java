@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.dao.IF_BoardDAO;
+import com.edu.dao.IF_ReplyDAO;
 import com.edu.vo.AttachVO;
 import com.edu.vo.BoardVO;
 import com.edu.vo.PageVO;
@@ -21,6 +22,8 @@ import com.edu.vo.PageVO;
 public class BoardServiceImpl implements IF_BoardService {
 	@Inject
 	private IF_BoardDAO boardDAO;
+	@Inject
+	private IF_ReplyDAO replyDAO;
 	@Override
 	public List<AttachVO> readAttach(Integer bno) throws Exception {
 		// TODO 첨부파일list형으로 조회DAO호출
@@ -32,6 +35,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		// TODO 페이징처리시 pageVO의 totalCount변수에 사용될 값을 리턴값으로받음.
 		return boardDAO.countBoard(pageVO);
 	}
+	
 	@Transactional
 	@Override
 	public void deleteBoard(int bno) throws Exception {
@@ -41,9 +45,12 @@ public class BoardServiceImpl implements IF_BoardService {
 		//*특이사항: 첨부파일은 DB만 삭재해서해결x +실제 업로드된 파일을 삭제가 필요.-나중에추가
 		
 		boardDAO.deleteAttachAll(bno);
+		//댓글DAO에서 deleteReplyAll실행
+		replyDAO.deleteReplyAll(bno);
 		boardDAO.deleteBoard(bno);
-		//*댓글삭제는 나중에
+		
 	}
+	
 	@Transactional //All or NotAll
 	@Override
 	public void updateBoard(BoardVO boardVO) throws Exception {
@@ -68,6 +75,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		index=index+1;//index++
 		}
 	}
+	
 	@Transactional
 	@Override
 	public BoardVO readBoard(int bno) throws Exception {
@@ -76,6 +84,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		BoardVO boardVO =boardDAO.readBoard(bno);
 		return boardVO;
 	}
+	
 	@Transactional
 	@Override
 	public void insertBoard(BoardVO boardVO) throws Exception {
@@ -90,6 +99,7 @@ public class BoardServiceImpl implements IF_BoardService {
 		int index=0;
 		String real_file_name="";//UI용 1개 파일명
 		AttachVO attachVO=new AttachVO();
+		//위 가로데이터를 세로데이터로 1개씩 뽑아서 인서트하는 로직
 		for(String save_file_name:save_file_names) {//첨부파일 개수만큼반복진행
 			if(save_file_name!=null) {
 				real_file_name =real_file_names[index];

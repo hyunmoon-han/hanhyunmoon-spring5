@@ -28,7 +28,7 @@ select * from tbl_attach where bno=#{bno}
 
 <!--  게시물 등록시 발생된 bno구한 결과값 1개만 구해서 첨부파일의 bno입력값으로 사용-서브쿼리사용 -->
 <insert id="insertAttach">
-insert into tnl_attach
+insert into tbl_attach
 (
 	save_file_name,real_file_name,reg_date,bno
 )
@@ -65,7 +65,7 @@ view_count = nvl(view_count,0)+1  <!-- view_count가 null일수도있기떄문�
 where bno=#{bno}
 </update>
 <select id="readBoard" resultType="com.edu.vo.BoardVO">
-select * from tbl_board where bno=#{bno}
+select * from tbl_board where bno=#{bno} order by reg_date asc
 </select>
 <!-- bno필드 변수가 자동증가가 되는 기능이 필요  seq.nextVal
 parameterType 출력처리 ok.

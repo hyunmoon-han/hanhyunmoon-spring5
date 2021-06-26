@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="replyMapper">
+<!-- 게시물을 지울떄, 댓글내용을 먼저 지우는 쿼리 -->
+<delete id="deleteReplyAll">
+delete from tbl_reply where bno=#{bno}
+</delete>
+<delete id="deleteReply">
+delete from tbl_reply where rno = #{rno}
+</delete>
+
+<update id="updateReply">
+update tbl_reply set
+reply_text=#{reply_text}
+,update_date = systimestamp
+where rno = #{rno}
+<!-- where 조건으로 식별자(pk)값 -->
+</update>
+
+<!-- 댓글을 등록할때 게시판 테이블에 reply_count필드에 값이 +1 발생 -->
+<!-- 댓글을 삭제할때 게시판테이블에 reply)count필드에 값이 -1발생 -->
+<update id="replyCountUpdate">
+update tbl_board set 
+reply_count= reply_count + #{count}
+where bno-#{bno}
+</update>
+
+<!-- 댓글에서는 Read가 별도로 없이 Select 1개로 구현이 됨 -->
+<insert id="inserReply" >
+<selectKey keyProperty="rno" resultType="int" order="BEFORE">
+select seq_rno.nextval from dual
+</selectKey>
+insert into tbl_reply
+(
+rno,reply_text,replyer,reg_date,bno
+)
+values
+(
+#{rno},#{reply_text},#{replyer},systimestamp,#{bno}
+)
+</insert>
+
+<!-- 검색할려면 토탈카운트구하깅 ,검색이없어서 조건x-->
+<select id="countReply" resultType="int">
+select count(*)form tbl_reply where bno=#{bno}
+</select>
+
+<!-- 검색 -->
+<select id="selectReply" resultType="com.edu.vo.ReplyVO">
+select rnum,tableB.*from
+(
+	select rownum AS rnum,tableA.* from
+	(
+		select * from tbl_reply
+		where bno=#{bno}
+		order by rno desc
+	)tableA
+<![CDATA[	
+	where rownum <= #{queryStartNo}+ #{queryPerPageNum}
+)tableB
+where rnum >#{queryStartNo}
+]]>	
+</select>
+
+
+</mapper>

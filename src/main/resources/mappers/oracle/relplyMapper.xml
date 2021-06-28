@@ -18,15 +18,15 @@ where rno = #{rno}
 </update>
 
 <!-- 댓글을 등록할때 게시판 테이블에 reply_count필드에 값이 +1 발생 -->
-<!-- 댓글을 삭제할때 게시판테이블에 reply)count필드에 값이 -1발생 -->
+<!-- 댓글을 삭제할때 게시판테이블에 reply_count필드에 값이 -1발생 -->
 <update id="replyCountUpdate">
 update tbl_board set 
 reply_count= reply_count + #{count}
-where bno-#{bno}
+where bno=#{bno}
 </update>
 
 <!-- 댓글에서는 Read가 별도로 없이 Select 1개로 구현이 됨 -->
-<insert id="inserReply" >
+<insert id="insertReply" >
 <selectKey keyProperty="rno" resultType="int" order="BEFORE">
 select seq_rno.nextval from dual
 </selectKey>
@@ -42,7 +42,7 @@ values
 
 <!-- 검색할려면 토탈카운트구하깅 ,검색이없어서 조건x-->
 <select id="countReply" resultType="int">
-select count(*)form tbl_reply where bno=#{bno}
+select count(*) from tbl_reply where bno=#{bno}
 </select>
 
 <!-- 검색 -->

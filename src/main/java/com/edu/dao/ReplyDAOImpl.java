@@ -20,9 +20,15 @@ public class ReplyDAOImpl implements IF_ReplyDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<ReplyVO> selectReply(PageVO pageVO) throws Exception {
+	public List<ReplyVO> selectReply(PageVO pageVO,Integer bno) throws Exception {
 		// TODO sqlSession 템블릿사용("메퍼쿼리명","매개변수명)
-		return sqlSession.selectList("replyMapper.selectReply", pageVO);
+		Map<String,Object>paramMap=new HashMap<String,Object>();
+				//paramMap.put("pageVO",pageVO);
+				paramMap.put("queryStartNo", pageVO.getQueryStartNo());
+				paramMap.put("queryPerPageNum", pageVO.getQueryPerPageNum());
+				paramMap.put("bno",bno);
+		return sqlSession.selectList("replyMapper.selectReply", paramMap);
+		
 	}
 
 	@Override
@@ -30,7 +36,7 @@ public class ReplyDAOImpl implements IF_ReplyDAO{
 		// TODO 동일
 		return sqlSession.selectOne("replyMapper.countReply", bno);
 	}
-
+	
 	@Override
 	public void insertReply(ReplyVO replyVO) throws Exception {
 		// TODO 동일

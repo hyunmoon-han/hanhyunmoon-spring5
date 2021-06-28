@@ -11,7 +11,7 @@ import com.edu.vo.ReplyVO;
  *
  */
 public interface IF_ReplyDAO {
-	public List<ReplyVO> selectReply(PageVO pageVO)throws Exception;
+	public List<ReplyVO> selectReply(PageVO pageVO,Integer bno)throws Exception;
 	public int countReply(Integer bno)throws Exception;
 	public void insertReply(ReplyVO replyVO)throws Exception;//replyVO는 jsp폼에서
 	public void replyCountUpdate(Integer bno,int count)throws Exception;

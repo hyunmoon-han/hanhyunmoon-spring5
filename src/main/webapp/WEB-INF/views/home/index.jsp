@@ -1,105 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<title> 스프링 </title>
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- 제이쿼리 코어 임포트 가져오기(아래) -->
-<script src="/resources/home/js/jquery-3.6.0.js"></script>
-<!-- 상단바로가기 클릭시 부드럽게 이동하는 외부 라이브러리 JS 임포트(아래) -->
-<script src="/resources/home/js/jquery.smooth-scroll.min.js"></script>
-<!-- 화면을 초기화 시키는 reset 스타일 임포트:크로스브라이징 처리하기위해서 -->
-<!-- 크롬, IE, 엣지, 사파리, 파이어폭스 h1, p, ul, div 태그의 크기가 조금씩 틀림니다. -->
-<!-- 작업한 결과가 모든 브라우져(크로싱브라우징)에 똑같이 보이게 하기 위한 reset.css(아래) -->
-<link rel="stylesheet" href="/resources/home/css/reset.css">
-<!-- 여기서 부터 사용자 정의형 스타일 + 스크립트 추가(아래) -->
-<link rel="stylesheet" href="/resources/home/css/mobile.css">
-<!-- 태블릿용 css임포트 -->
-<link rel="stylesheet" href="/resources/home/css/tablet.css">
-<!-- pc용 css임포트 -->
-<link rel="stylesheet" href="/resources/home/css/pc.css">
-<script src="/resources/home/js/main.js"></script>
-<!-- 메인 슬라이드 코어 임포트 -->
-<script src="/resources/home/js/slidemain.js"></script>
-
-<style>
-/* 모바일용 로그인 스타일 */
-
-/* //모바일용 로그인 스타일 */
-
-/* 테블릿용 메인페이지 스타일 지정(아래)  801px~무한대까지 재정의*/
-@media all and (min-width:801px){  /*가로크기 801px이상부터는*/
-	
-}
-/* pc용 메인 페이지 스타일 지정  1066px~ 무한대까지의 재정의*/
-@media all and (min-width :1066px){
-	
-}
-
-</style>
+<%@ include file="./include/header.jsp" %>
 <script>
-//pc용  서브메뉴 사라지는 액션
-var isOver1= false;//대메뉴 1이 false 일때 서브메뉴가 사라지는 조건
-var isOverSub1=false;//서브메뉴 1번이 false 일때 서브메뉴가 사라지는 조건
-// 1번 서브메뉴를 숨기는 함수()
-function goHide1(){
-	if(!isOver1 && !isOverSub1){//2개변수 값이 다 false일때 구현조건이 됩니다.
-		$('.gnb_depth2_1').stop().fadeOut('fast');//서브메뉴의의2번의1이사라지게된다
-	}
-}
-var isOver2=false;//대메뉴 2번이false일때 서브메뉴가 사라지는 조건
-var isOverSub2=false;//서브메뉴2번이 false일때 서브메뉴거 사라지는 조건
-//2번 서브메뉴 숨기기함수(아래)
-function goHide2(){
-	if(!isOver2 && !isOverSub2){
-		$('.gnb_depth2_2').stop().fadeOut('fast');//페이드아웃실행되고 스탑실행  
-	}
-}
-//PC용 서브메뉴가 나타나는액션 만들기(아래)
-$(document).ready(function(){
-	//대메뉴 1액션
-	$('.openAll1').mouseover(function(){
-		if(parseInt($( 'header').css('width')) >=1049){
-			$('.gnb_depth2_1').stop().fadeIn('slow');//서브메뉴1번이 나타나게 처리
-		}
-		isOver1=true;//false일때 숨기는 조건<->true 일때 나타나는 조건
-	});
-	$('.openAll1').mouseout(function(){
-		isOver1=false;
-		setTimeout('goHide1()',200);//기본은 goHide1() 이것만하면 되는데 ,mouseout이벤트 놓치면 않되기 때문에 setTimeout사용
-	});
-	//서브메뉴1 액션
-	$('.gnb_depth2_1').mouseover(function(){
-		isOverSub1=true;//서브메뉴1 계속 나타납니다.
-	});
-	$('.gnb_depth2_1').mouseout(function(){
-		isOverSub1=false;//서브메뉴1번이 사라집니다.
-		setTimeout('goHide1()',200);
-	});
-	//대메뉴2 액션
-	$('.openAll2').mouseover(function(){
-		if(parseInt($( 'header').css('width')) >=1049){
-			$('.gnb_depth2_2').stop().fadeIn('fast');//서브메뉴1번이 나타나게 처리
-		}
-		isOver2=true;//false일때 숨기는 조건<->true 일때 나타나는 조건
-	});
-	$('.openAll2').mouseout(function(){
-		isOver2=false;
-		setTimeout('goHide2()',200);
-	});
-	//서브메뉴 2액션
-	$('.gnb_depth2_2').mouseover(function(){
-		isOverSub2=true;//서브메뉴2 계속 나타납니다.
-	});
-	$('.gnb_depth2_2').mouseout(function(){
-		isOverSub2=false;//서브메뉴2번이 사라집니다.
-		setTimeout('goHide2()',200);
-	});
-});
-// 메인페이지 전용 슬라이드 호출 부분
+// 메인페이지 전용 슬라이드 호출 부분: index에서만 필요한 코드이기 떄문에
 $(document).ready(function() {
 	// 위에서 선언한 함수|변수 사용(아래)
 	//여기서 함수호출(실행)
@@ -133,62 +36,7 @@ $(document).ready(function() {
 		});
 	});
 });
-
-</script>
-</head>
-<body>
-<!-- 헤더에서푸터까지 -->
-<div id="wrap">
-	<!-- 헤더상단메뉴영역영역 -->
-	<header id="header">
-		<div class="header_area box_inner clear">
-			<!-- 상단로고영역 -->
-			<h1><a href="index.html">스프링 in 자바</a></h1>
-			<!-- //상단로고영역 -->
-			
-			<!-- 상단메뉴메뉴영역 -->
-			<p class="openMOgnb">
-				<a href="#">
-					<b class="hdd">메뉴열기</b> 
-					<span></span><span></span><span></span>
-				</a>
-			</p>
-			<div class="header_cont">
-				<ul class="util clear">
-					<li><a href="login.html">로그인</a></li>
-					<li><a href="join.html">회원가입</a></li>
-					<!-- 로그인 후 보이는 메뉴(아래) -->
-					<li><a href="#">OOO님 환영합니다.</a></li>
-					<li><a href="mypage.html">마이페이지</a></li>
-					<li><a href="/admin">AdminLTE</a></li>
-				</ul>	
-				<nav>
-				<ul class="gnb clear">
-					<li><a href="board_list.html" class="openAll1">샘플홈페이지</a>
-
-                        <div class="gnb_depth gnb_depth2_1">
-                            <ul class="submenu_list">
-                                <li><a href="board_list.html">반응형홈페이지</a></li>
-                            </ul>
-                        </div>
-					</li>
-					<li><a href="board_list.html" class="openAll2">커뮤니티</a>
-				        <div class="gnb_depth gnb_depth2_2">
-                            <ul class="submenu_list">
-                                <li><a href="board_list.html">공지사항</a></li>
-                                <li><a href="board_list.html">겔러리게시판</a></li>
-                            </ul>
-                        </div>
-					</li>
-				</ul>
-                </nav>
-				<p class="closePop"><a href="javascript:;">닫기</a></p>
-			</div>
-			<!-- //상단메뉴메뉴영역 -->
-		</div>
-	</header>
-	<!-- //헤더상단메뉴영역영역 -->
-	
+</script>	
 	<!-- 메인콘텐츠영역 -->
 	<div id="container">
 		<!-- 모바일+PC 공통슬라이드영역 -->
@@ -286,37 +134,5 @@ $(document).ready(function() {
 		<!-- //카카오톡상담및최근공지사항영역 -->
 	</div>
 	<!-- //메인콘텐츠영역 -->
-	
-	<!-- 푸터메뉴및사업자정보영역 -->
-	<footer>
-		<div class="foot_area box_inner">
-			<ul class="foot_list clear">
-				<li><a href="javascript:;">이용약관</a></li>
-				<li><a href="javascript:;">개인정보취급방침</a></li>
-			</ul>
-			<h2>스프링</h2>
-            <p class="addr">OOOO OOOOO OOOO OOOOOOOOO OOOOO <span class="gubun">/</span>        
-				<span class="br_line">대표전화 <span class="space0">02-1234-5678</span> <span class="gubun">/</span>        
-					<span class="br_line">E-mail : <span class="space0"> admin@OOOO OOOOO.com</span></span>
-				</span>
-			</p>
-			<p class="copy box_inner">Copyright(c) OOOO OOOOO all right reserved</p>
-			<ul class="snslink clear">
-				<li><a href="javascript:;">blog</a></li>
-				<li><a href="javascript:;">facebook</a></li>
-				<li><a href="javascript:;">instargram</a></li>
-			</ul>
-		</div>
-	</footer>
-	<!-- //푸터메뉴및주소영역 -->
-</div>
-<!-- //헤더에서푸터까지 -->
 
-<!-- 하단퀵메뉴영역 -->
-<div class="quick_area">
-	<p class="to_top"><a href="#wrap" class="s_point">TOP</a></p>
-</div>
-<!-- //하단퀵메뉴영역 -->
-
-</body>
-</html>
+<%@ include file="./include/footer.jsp" %>

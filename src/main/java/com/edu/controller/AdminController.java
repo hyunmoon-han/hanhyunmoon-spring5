@@ -299,6 +299,8 @@ public class AdminController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encPassword =passwordEncoder.encode(rawPassword);
 		memberVO.setUser_pw(encPassword);
+		//스프링시큐리티ㅣ 내장클래서 에서user.pw(admin1234)와 password(해시값)비교함수
+		//passwordEncoder.matches(admin1234, Password); 참이면 로그인성~공
 		}
 		//이 메서드는 수정 처리 이후 보인 페이지에 있습니다
 		memberService.updateMember(memberVO);//반환값이 없습니다.

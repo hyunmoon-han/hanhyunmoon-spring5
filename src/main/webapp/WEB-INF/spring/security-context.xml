@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+<!-- 스프링시큐리티는 AOP(Aspect,@ControllerAdvice)기능의 일종 핵심은 intercept(실행전)라는 태그를 사용하는것이 핵심 -->
+<!-- 아래는 시큐리티 영향을 받지않는 아무나 직접 URL접근이 가능한 주소 |URL로 접근할떄 자바파일은 시큐리티 넌
+주로 정적인(static,resources폴더안의)파일들은 보안해제 시킴(아래)  모든폴더안에 모든파일들-->
+<security:http pattern="/**/*.js" security="none"/>
+<security:http pattern="/**/*.css" security="none"/>
+<security:http pattern="/**/img/*" security="none"/>
+<!-- 스프링 시큐리티 기본설정 시작 use-expressions=ture는 아래 설정내용중 자바의 EL-${}(자바코드를 쓸수있다이말이야)을 사용하겟다-->
+<security:http auto-config="true" use-expressions="true">
+	<security:session-management invalid-session-url="/"><!-- 루트로 접근하면 invalid(유효하지 않는) session을 사용하지않것다 -->
+	<security:concurrency-control max-sessions="3" error-if-maximum-exceeded="false"/>
+	</security:session-management>
+	<!-- 여기서부터 intercept(가로채기AOP)사용해서 로그인+권한체크를 access속성으로 설정함.
+		특징은 밑에서부터 위로 해석이 됩니다.
+	 -->
+	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_insert" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_insert_form" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_update" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_update_form" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_delete" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/member/**" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**" access="permitAll"/>
+	<security:csrf disabled="true"/><!-- 보안.ㅣ;방지기능 꺼놈 -->
+	<!-- 접근 허용이 안된 사용자들을 체크해서 로그인폼으로 이동하게 설정(아래) 태그방식(xml)은'=' ','x,json은':'
+		login-processing처리는 jsp로그인폼의 POST방식/login을 처리해 줌(컨트롤러에서 RequestMap필요없음
+		여기서 처리한 /login 프로세싱의 결과가 /login_success 컨트롤러로 이동해서 로그인 세션을 만들어야합니다.
+		/login 을 처리하려면 jsp의 로그인 폼의 user_id,user_pw POST로 받아서 처리합니다
+	-->
+	<security:form-login
+		login-page="/login_form"
+		login-processing-url="/login"
+		always-use-default-target="true"
+		default-target-url="/loing_success"
+		authentication-failure-url="/login_form?msg=fail"
+		username-parameter="user_id"
+		password-parameter="user_pw"  		
+	/>
+	<!-- 위 폼에서 받은 user_id,user_pw 처리합니다(쿼리) 
+	토큰:네트워크에서 자료를 입출력할때 사용하는 자료형태를 토큰이라고 함. 아래 remember-me 예,아이디 저장 //token validity 유지시간 key가 remember-me가됨
+	    ./logout하면 여기서로그인 세션을 invalidate() 처리함-메모리에서 지움.(컨트롤러에서 처리x)-->
+	<security:remember-me key="remember-key" token-validity-seconds="604800" remember-me-parameter="remember-me-parameter" />
+	<security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true"
+	delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+</security:http>
+<!--스프링시큐리티나OAuth2.0(외부인증)나 무엇이 되었든 2개로 구성,Authenticatoin(로그인 |인증),Authority(권한)  -->
+<!-- /login이 호출되면 아래쿼리를 거치면서  최초로 데이터가 발생됨: 스프링 시큐리티클래스에서 실행됨
+	user_id,user_pw로쿼리실행
+	user-by-username-query 이 쿼리가 실행됨(user_id사용) 이쿼리만 가지고는 비교않됨.
+	위 쿼리결과인 password와 user_pw비교해서 같으면 /login_success가 실행됨.반대일경우 다시 login폼
+	시큐리티 클래스 -> 해당페이지에서 백그라운드에서 비교 .  (암호 데이터 비교:password(해시값)-user_pw(admin1234):
+	스프링시큐리티ㅣ 내장클래서 에서user.pw(admin1234)와 password(해시값)비교함수
+	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	스프링방식:Boolean valueTrue= passwordEncoder.matches(admin1234, Password); 참이면 로그인성~공->login_success로이동) ,.equals비교불가
+	위 matches메서드를 사용할건지==암호화로 비교할 건지 옵션을 추가 밑으로
+	일반사이트:select * from tbl_member where user_id=user_i and user_pw=md5(user_pw);   
+	참고-mysql암호화:md5(),sha1(),password()
+-->
+<security:authentication-manager>
+	<security:authentication-provider>
+		<security:jdbc-user-service 
+		data-source-ref="dataSource"
+		users-by-username-query="select user_id as no,user_pw as password, enabled from tbl_member where user_id = ?"
+		authorities-by-username-query="select user_id as no,levels as authority from tbl_member where user_id = ?"
+		/>
+		<security:password-encoder ref="passwordEncoder" /><!-- 시큐리티에 페스워드 인코딩을 할건가-->
+		
+	</security:authentication-provider>
+</security:authentication-manager>
+<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
+/><!-- 시큐리티에 페스워드 인코딩을 쓸건가 ,빈등록 ,클래스는 저걸가져와서 쓰겟다임마-->
+<!--  -->
+</beans>

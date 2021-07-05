@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,9 +36,9 @@
 }
 </style>
 <script>
-//공통으로 사용하는 변수:로그인 성공, 게시물 등록/수정 /삭제 성공메서지
-if("${msg}"!=""){
-	alert("#{msg} 가(이) 성공하였습니다.");
+//공통으로 사용하는 변수:로그인 성공+마이페이지, 게시물 등록/수정 /삭제 성공메서지
+if("${msg}" != "") {
+	alert("${msg} (가)이 성공하였습니다.");
 }
 </script>
 
@@ -61,12 +62,22 @@ if("${msg}"!=""){
 			</p>
 			<div class="header_cont">
 				<ul class="util clear">
+				<c:choose>
+					<c:when test="${session_enabled eq 'true'}">
+					<!-- 로그인 후 보이는 메뉴(아래) -->
+					<li><a href="#">${session_username} 님 환영합니다.</a></li>
+					<li><a href="/logout">로그아웃</a></li>
+					<li><a href="/member/mypage_form">마이페이지</a></li>
+					<!-- ROLE-ADMIN 권한만 adminLTE에 가능하도록 조건 -->
+					<c:if test="${session_levels eq 'ROLE_ADMIN'}">
+					<li><a href="/admin">AdminLTE</a></li>
+					</c:if>				
+					</c:when>
+					<c:otherwise>
 					<li><a href="/login_form">로그인</a></li>
 					<li><a href="/join_form">회원가입</a></li>
-					<!-- 로그인 후 보이는 메뉴(아래) -->
-					<li><a href="#">OOO님 환영합니다.</a></li>
-					<li><a href="mypage.html">마이페이지</a></li>
-					<li><a href="/admin">AdminLTE</a></li>
+					</c:otherwise>
+				</c:choose>
 				</ul>	
 				<nav>
 				<ul class="gnb clear">

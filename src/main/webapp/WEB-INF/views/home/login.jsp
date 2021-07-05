@@ -3,7 +3,7 @@
 <%@ include file="./include/header.jsp" %>
 <script>
 //로그인 실패전용 메서지
-if("${msg}"=="fail"){
+if("${param.msg}" == "fail"){
 	alert("로그인 실패입니다.다시 입력해주세요.");
 }
 </script>
@@ -33,7 +33,7 @@ if("${msg}"=="fail"){
                 <ul class="app_list">
                     <li class="clear">
                         <label for="id_lbl" class="tit_lbl pilsoo_item">아이디</label>
-                        <div class="app_content"><input type="text" name="user_id" class="w100p" id="id_lbl" placeholder="아이디를 입력해주세요" required/></div>
+                        <div class="app_content"><input autofocus type="text" name="user_id" class="w100p" id="id_lbl" placeholder="아이디를 입력해주세요" required/></div>
                     </li>
                     <li class="clear">
                         <label for="password_lbl" class="tit_lbl pilsoo_item">암호</label>

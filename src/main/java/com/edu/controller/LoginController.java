@@ -29,7 +29,7 @@ public class LoginController {
 	@Inject
 	private IF_MemberService memberService;
 	// security-context에서 처리한 ID,암호 비교 쿼리 실행된 결과가 Authentication에 저장된 결과를 사용합니다 .
-	@RequestMapping(value="/login_seccess",method=RequestMethod.GET)
+	@RequestMapping(value="/login_success",method=RequestMethod.GET)
 	public String login_success(HttpServletRequest request,RedirectAttributes rdat) throws Exception{
 		//request의 목적:세션 객체를 만들기 위해서 (로그인 정보를 화면이 이동하더라도 유지하기위해서)
 		//rdat의 목적:modal객체로 값을 전송할수 없는 상황일떄, 값을 jsp로 전송하기위해서
@@ -73,6 +73,6 @@ public class LoginController {
 			session.setAttribute("session_username", memberVO.getUser_name());
 		}
 		rdat.addFlashAttribute("msg","로그인");//로그인 성공여부를 jsp페이지로 보내주는 변수생성.
-		return "redorect:/";
+		return "redirect:/";
 	}
 }

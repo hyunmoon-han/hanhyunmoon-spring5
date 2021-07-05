@@ -20,12 +20,12 @@
 		특징은 밑에서부터 위로 해석이 됩니다.
 	 -->
 	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/**/*_insert" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/**/*_insert_form" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/**/*_update" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/**/*_update_form" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/**/*_delete" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
-	<security:intercept-url pattern="/**/member/**" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_insert" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_insert_form" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_update" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_update_form" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_delete" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/member/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 	<security:intercept-url pattern="/**" access="permitAll"/>
 	<security:csrf disabled="true"/><!-- 보안.ㅣ;방지기능 꺼놈 -->
 	<!-- 접근 허용이 안된 사용자들을 체크해서 로그인폼으로 이동하게 설정(아래) 태그방식(xml)은'=' ','x,json은':'
@@ -37,7 +37,7 @@
 		login-page="/login_form"
 		login-processing-url="/login"
 		always-use-default-target="true"
-		default-target-url="/loing_success"
+		default-target-url="/login_success"
 		authentication-failure-url="/login_form?msg=fail"
 		username-parameter="user_id"
 		password-parameter="user_pw"  		
@@ -61,7 +61,7 @@
 	위 matches메서드를 사용할건지==암호화로 비교할 건지 옵션을 추가 밑으로
 	일반사이트:select * from tbl_member where user_id=user_i and user_pw=md5(user_pw);   
 	참고-mysql암호화:md5(),sha1(),password()
--->
+--><!-- 아래no,password,enabled 는 스프링안의 고유비교어쩌구 다르면 시큐리티에서 처리하게 만들기위해as ''으로 바꿔야함 -->
 <security:authentication-manager>
 	<security:authentication-provider>
 		<security:jdbc-user-service 
@@ -69,7 +69,7 @@
 		users-by-username-query="select user_id as no,user_pw as password, enabled from tbl_member where user_id = ?"
 		authorities-by-username-query="select user_id as no,levels as authority from tbl_member where user_id = ?"
 		/>
-		<security:password-encoder ref="passwordEncoder" /><!-- 시큐리티에 페스워드 인코딩을 할건가-->
+		<security:password-encoder ref="passwordEncoder" /><!-- 시큐리티에 패스워드 인코딩을 할건가-->
 		
 	</security:authentication-provider>
 </security:authentication-manager>

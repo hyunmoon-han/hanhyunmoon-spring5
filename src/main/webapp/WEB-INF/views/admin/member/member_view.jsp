@@ -54,7 +54,7 @@
                  <c:out value="${memberVO.email}"/>
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">가입대기</label>
+                <label for="exampleInputPassword1">로그인 여부</label>
                 <br>
                  <c:out value="${memberVO.enabled}"/>
               </div>

@@ -170,7 +170,7 @@ public class DataSourceTest {
 	 public void oldQueryTest() throws Exception{
 		 //스프링빈을 사용하지 않을때 예전 방식-코딩테스트에서는 스프링설정을 안쓰고, 직접DB아이디 /암호 입력
 		 Connection connection =null;
-		 connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE","XE2","apmsetup");
+		 connection=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE","XE","apmsetup");
 		 
 		 logger.debug("데이터베이스 직접 접속이 성공 하였습니다. DB종료는 "+connection.getMetaData().getDatabaseProductName());
 		 // DriverManager:데이터연동할때 쓰는클래스
@@ -198,15 +198,23 @@ public class DataSourceTest {
 		 rs=null;//메모리 반환
 		 connection=null;//메모리 초기화
 	 }
-	 
-		/*
-		 * @Test public void dbConnectionTest() { //데이터베이스 커넥션 테스트: 설정은 root-context의
-		 * 빈(스프링클래스)을 이용 try { Connection connection =dataSource.getConnection();
-		 * logger.debug("데이터베이스 접속이 성공 하였습니다. DB종료는 "+connection.getMetaData().
-		 * getDatabaseProductName()); } catch (SQLException e) {
-		 * logger.debug("데이터베이스 접속이 실패 하였습니다."); //e.printStackTrace(); } }
-		 * 
-		 * @Test public void junitTest() { //로거는 장점>조건에 따라서 출력을 조정할수 있음.
-		 * logger.debug("Junit테스트 시작 입니다."); }
-		 */
+	 @Test
+		public void dbConnectionTest() {
+			//데이터베이스 커넥션 테스트: 설정은 root-context의 빈(스프링클래스)를 이용
+			try {
+				Connection connection = dataSource.getConnection();
+				logger.debug("데이터베이스 접속이 성공 하였습니다. DB종류는 "+ connection.getMetaData().getDatabaseProductName());
+			} catch (SQLException e) {
+				logger.debug("데이터베이스 접속이 실패 하였습니다.");
+				//e.printStackTrace();
+			}
+			
+		}
+		@Test
+		public void junitTest() {
+			//로거는 장점>조건에 따라서 출력을 조정할 수 있음.
+			logger.debug("Junit테스트 시작 입니다.");
+		}
+		
+		  
 }

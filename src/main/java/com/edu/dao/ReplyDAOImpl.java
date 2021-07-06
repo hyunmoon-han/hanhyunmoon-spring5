@@ -23,7 +23,8 @@ public class ReplyDAOImpl implements IF_ReplyDAO{
 	public List<ReplyVO> selectReply(PageVO pageVO,Integer bno) throws Exception {
 		// TODO sqlSession 템블릿사용("메퍼쿼리명","매개변수명)
 		Map<String,Object>paramMap=new HashMap<String,Object>();
-				//paramMap.put("pageVO",pageVO);
+				//paramMap.put("pageVO",pageVO); 살아 있다면 [pageVO,{"":"","":,""}] 이런식으로 살아서 paramMap.bno-쿼리에서이런식으로쓸수있음
+		
 				paramMap.put("queryStartNo", pageVO.getQueryStartNo());
 				paramMap.put("queryPerPageNum", pageVO.getQueryPerPageNum());
 				paramMap.put("bno",bno);

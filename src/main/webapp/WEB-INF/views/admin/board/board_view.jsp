@@ -328,8 +328,14 @@ var replyList = function(){//함수형변수
 				printPagingList(result.pageVO,".pagination");
 			}
 		},
-		error:function(){
-			alert("RestPAI서버가 작동하지 않습니다.다음에 이용해 주세요.")
+		error:function(result){
+			//전체json데이터를 출력할때 json.stringify함수로 형변환해서 출력
+			//alert(JSON.stringify(result));//이클립스 에서 확인할때.JSON.stringify(문자열로바꾸서 나옴)
+			//console.log(result);//크롬에서 확인가능
+			//만약에 json데이터에서 키이름을 알게되면, stringify함수 필요없이 result.responseText로 출력가능
+			alert(result.responseText);
+			//단,관리자단에서만 디버그하고 ,사용자단에서는 아래 항목만 유지
+			alert("RestPAI서버가 작동하지 않습니다.다음에 이용해 주세요0.")
 		}
 	});
 };
@@ -360,7 +366,7 @@ $(document).ready(function(){
 				}
 			},
 			error:function(){
-				alert("RestAPI서버가 작동하지 않습니다.다음에 시도해 주세요.")
+				alert("RestAPI서버가 작동하지 않습니다.다음에 시도해 주세요1.")
 			}
 		});//제이쿼리
 	});
@@ -396,7 +402,7 @@ $(document).ready(function(){
 				}
 			},
 			error:function() {
-				alert("RestAPI서버가 작동하지 않습니다. 잠시 후 이용해 주세요.")
+				alert("RestAPI서버가 작동하지 않습니다. 잠시 후 이용해 주세요2.")
 			}
 		});
 	});
@@ -444,7 +450,7 @@ $(document).ready(function(){
 				replyList();
 			},
 			error:function() {
-				alert("RestAPI서버가 작동하지 않습니다. 잠시 후 이용해 주세요.")
+				alert("RestAPI서버가 작동하지 않습니다. 잠시 후 이용해 주세요3.")
 			}
 		});
 	});

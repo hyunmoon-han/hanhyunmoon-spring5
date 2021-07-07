@@ -1,5 +1,6 @@
 package com.edu.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,23 +64,41 @@ public class HomeController {
 	//public 뷰단 jsp파일명리턴형식 콜백함수(자동실행함수)
 	//return "파일명"
 	
+	//게시물 삭제 처리 호출 POST추가
+	@RequestMapping(value="/home/board/board_delete",method=RequestMethod.POST)
+	public String board_delete(@RequestParam("bno")Integer bno,RedirectAttributes rdat)throws Exception{
+		//부모테이블 삭제전 삭제할 파일들 변수로 임시 저장(아래)
+		List<AttachVO> delFiles=boardService.readAttach(bno);//세로값
+		//DB에서 1개 레코드 삭제처리
+		boardService.deleteBoard(bno);
+		//첨부파일 있으면 삭제
+		for(AttachVO file:delFiles) {//향상된 for문에서는 실행조건이 필요없음
+			File target=null;//////
+		}
+		
+		rdat.addFlashAttribute("msg","게시물삭제");//성공시 메세지 출력용 변수
+		return "redirect:/home/borad/board_list";//성공시 이동할 주소.url을가르킴
+	}
 	//게시물 상세보기 호출 GET추가
-	@RequestMapping(value="home/board/board_view",method=RequestMethod.GET)
+	@RequestMapping(value="/home/board/board_view",method=RequestMethod.GET)
 	public String board_view(Model model,@RequestParam("bno")Integer bno,@ModelAttribute("pageVO")PageVO pageVO) throws Exception{		
 		//첨푸파일 가져오기
 		List<AttachVO> listAttachVO=boardService.readAttach(bno);
 		//첨부파일이 있다면 save_file_names,real_file_names2개를 만듬.
 		String[] save_file_nemes=new String[listAttachVO.size()];
 		String[] real_file_names=new String[listAttachVO.size()];
+		int index = 0;
 		for(AttachVO file:listAttachVO) {//세로 데이터를 가로데이터로 변경처리
-			int index = 0;
-			
-		}
-			
-		
-		
+			save_file_nemes[index]=file.getSave_file_name();
+			real_file_names[index]=file.getReal_file_name();
+			index +=1;
+		}					
+		BoardVO boardVO= boardService.readBoard(bno);//1개 레코드입력됨
+		boardVO.setSave_file_names(save_file_nemes);
+		boardVO.setReal_file_names(real_file_names);
 		//DB테이블 테이터 가져오기
-		model.addAttribute("boardVO", boardService.readBoard(bno));
+		model.addAttribute("boardVO", boardVO);
+		model.addAttribute("checkImgArray", commonUtil.getCheckImgArray());
 		return "home/board/board_view";//.jsp생략
 	}
 	//게시물 등록처리호출POST.redirect일떄는 model로못보냄

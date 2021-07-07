@@ -156,8 +156,8 @@ public class CommonUtil {
 	//첨부파일이 이미지인지 아닌지 확인하는 데이터 생성
 	private ArrayList<String>checkImgArray =new ArrayList<String>() {
 		{
-		add("aif");
-		add("jgp");
+		add("gif");
+		add("jpg");
 		add("jpeg");
 		add("png");
 		add("bmp");

@@ -249,7 +249,8 @@ input::placeholder{/*가상요소 -입력시 없어짐      IE(Internet Explore)
    padding: 20px 15px !important;
 }
 .btn_bbs {/*모바일 전용 width100% 때문에*/
-   margin-bottom: 5px ;
+	border-style:none;
+   margin-bottom: 0px ;
    display: inline-block;
    width: 100%;
    height: 35px;

@@ -125,10 +125,12 @@ $(document).ready(function(){
 		if($(this).val() !=""){
 			$.ajax({
 				type:"get",
-				url:"/id_check?user_id="+$(this).val(),
-				dataType:"text",
+				url:"/id_check_2010?user_id="+$(this).val(),
+				dataType:"json",//전송받는 데이터형
 				success:function(result){
-					if(result== 0){//중복ID가 존재하지 않으면
+					//alert(result.memberCnt);
+					//alert(JSON.stringify(result));//json데이터 디버그
+					if(result.memberCnt== 0){//중복ID가 존재하지 않으면
 						$("#btn_insert").attr("disabled",false);
 						$("#btn_insert").css("opacity","1");
 						$("#msg").remove();

@@ -69,7 +69,17 @@ public class HomeController {
 	
 	//게시물 수정 추리 POST방식
 	@RequestMapping(value="/home/board/board_update",method=RequestMethod.POST)
-	public String board_update(PageVO pageVO,BoardVO boardVO,RedirectAttributes rdat,@RequestParam("file")MultipartFile[] files)throws Exception{
+	public String board_update(HttpServletRequest request,PageVO pageVO,BoardVO boardVO,RedirectAttributes rdat,@RequestParam("file")MultipartFile[] files)throws Exception{
+		/*아래기능을 AOP로 구현합니다.1
+		//로그인한 세션ID와 게시물의 boardVO.writer 사용자와 비교해서 같으면 계속진행 <->멈춤
+		HttpSession session=request.getSession();
+		if(!boardVO.getWriter().equals(session.getAttribute("session_userid"))){
+			
+			rdat.addFlashAttribute("msgError","게시물은 본인 글만 수정 가능합니다.");
+			//requst객체에  이전페이지 URL("Referer")로 존재하고, 이 URL을 이전페이지 이동으로 사용
+			return "redirect:"+request.getHeader("Refefer");			
+		}//else로 묶을필요x->위 return을 만나면  이후 실행이 않되고 메서드가 종료됨
+		*/
 		//첨부파일처리,delFiles만드는 이유는 첨부파일은 수정시,기존 파일 삭제 후 입력해야 하기 떄문에
 		List<AttachVO> delFiles=boardService.readAttach(boardVO.getBno());
 		//폼에서 전송받은 첨부파일files 가로배치로 만들기 위해서 배열변수 생성
@@ -115,10 +125,20 @@ public class HomeController {
 	
 	//게시물 수정 폼 호출GET로 추가
 	@RequestMapping(value="/home/board/board_update_form",method=RequestMethod.GET)
-	public String board_update_form(Model model,@RequestParam("bno")Integer bno,@ModelAttribute("pageVO")PageVO pageVO)throws Exception{
+	public String board_update_form(RedirectAttributes rdat,HttpServletRequest request,Model model,@RequestParam("bno")Integer bno,@ModelAttribute("pageVO")PageVO pageVO)throws Exception{		
 		//1개의 레코드만 서비스로 호출해서 모델로 보내줌-첨부파일 을 세로데이터를 가로데이터로 변경후 boardVO에 담아서 전송
 		BoardVO boardVO = new BoardVO();
 		boardVO = boardService.readBoard(bno);
+		/*아래기능을 AOP로 구현2
+		//로그인한 세션ID와 게시물의 boardVO.writer 사용자와 비교해서 같으면 계속진행 <->멈춤
+		HttpSession session=request.getSession();
+		if(!boardVO.getWriter().equals(session.getAttribute("session_userid"))){
+			
+			rdat.addFlashAttribute("msgError","게시물은 본인 글만 수정 가능합니다.");
+			return "redirect:"+request.getHeader("Refefer");//본인ID글이 아닐떄 이전페이지로 이동
+		}//else로 묶을필요x->위 return을 만나면  이후 실행이 않되고 메서드가 종료됨
+		 */
+		
 		//save_file_names,real_file_names 가상 필드값을 채웁니다.
 		List<AttachVO> fileList = boardService.readAttach(bno);//세로 데이터 생성
 		int index=0;
@@ -136,7 +156,18 @@ public class HomeController {
 	}
 	//게시물 삭제 처리 호출 POST추가
 	@RequestMapping(value="/home/board/board_delete",method=RequestMethod.POST)
-	public String board_delete(@RequestParam("bno")Integer bno,RedirectAttributes rdat)throws Exception{
+	public String board_delete(PageVO pageVO,HttpServletRequest request,@RequestParam("bno")Integer bno,RedirectAttributes rdat)throws Exception{
+		/*공통기능으로구현3
+		BoardVO boardVO= boardService.readBoard(bno);//아래 조건때문에 추가
+		//로그인한 세션ID와 게시물의 boardVO.writer 사용자와 비교해서 같으면 계속진행 <->멈춤
+		HttpSession session=request.getSession();
+		if(!boardVO.getWriter().equals(session.getAttribute("session_userid"))){
+			
+			rdat.addFlashAttribute("msgError","게시물은 본인 글만 삭제 가능합니다.");
+			return "redirect:"+request.getHeader("Refefer");//본인ID글이 아닐떄 이전페이지로 이동
+		}//else로 묶을필요x->위 return을 만나면  이후 실행이 않되고 메서드가 종료됨
+	*/
+		
 		//부모테이블 삭제전 삭제할 파일들 변수로 임시 저장(아래)
 		List<AttachVO> delFiles=boardService.readAttach(bno);//세로값
 		//DB에서 1개 레코드 삭제처리

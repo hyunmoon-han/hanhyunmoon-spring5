@@ -80,7 +80,7 @@ public class ReplyController {
 		
 		return result;
 	}
-	@RequestMapping(value="/reply/reply_list/{bno}/{page}", method=RequestMethod.POST)//POST로 만든목적은 현재 도메인에서만 사용가능하도록 하기 위해서
+	@RequestMapping(value="/reply/reply_list/{bno}/{page}", method=RequestMethod.POST)//PathVariable:크롤링에잘걸린데|POST로 만든목적은 현재 도메인에서만 사용가능하도록 하기 위해서
 	public ResponseEntity<Map<String,Object>> reply_list(@PathVariable("bno")Integer bno,@PathVariable("page")Integer page) {
 		ResponseEntity<Map<String,Object>> result = null;
 		//ResponseEntity는 일반 Controller클래스에서 사용했던 ResponseBody와 같은 역할.

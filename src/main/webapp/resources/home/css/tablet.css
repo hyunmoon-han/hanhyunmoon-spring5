@@ -17,7 +17,7 @@
 		display: block;
 		width: 100px;
 		height: 80px;
-		background-size: 70px 80px !important/*다른데 영향을받지않도록*/;
+		background-size: 85px 80px !important/*다른데 영향을받지않도록*/;
 	}
 	.openMOgnb{
 		display: none;/*모바일용 햄버거 메누 숨기기*/

@@ -399,6 +399,7 @@ $(document).ready(function(){
 			},
 			error:function() {
 				alert("RestAPI서버가 작동하지 않습니다. 잠시 후 이용해 주세요3.")
+				return false;
 			},
 			beforeSend:function(){
 				//alert("전송전에 실행할 내용. 츨력1");

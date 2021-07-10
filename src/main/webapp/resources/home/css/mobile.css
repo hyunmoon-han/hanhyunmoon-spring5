@@ -62,13 +62,13 @@ header { /* 태그선택자 */
 	height: 50px;
 	text-align: center;
 	padding: 3px 0px 0px;/* 3px(상하) 0px(좌) 0px(우) */
-}/*../img/logo.png*/
+}
 .header_area h1 a {
 	/* 로고는 이미지인데 글을 더한 이유는 웹접근성 때문에 추가(스크린리더:시각장애인용유틸리티)  */
 	display: inline-block;
 	width: 150px;
 	height: 80px;
-	background: url(../img/clogo.png) no-repeat;/* css3는 함수를 지원합니다. */
+	background: url(../img/logo.png) no-repeat;/* css3는 함수를 지원합니다. */
 	background-size: 80px 70px !important;/* 백그라운드 이미지 사이즈 가로50px, 세로60px */
 	background-position: center center !important;/* 이미지위치가 가로 가운데, 세로 가운데정렬 */
 	text-indent: -9999px;/* 들여쓰기 이미지만 보이고, 글자는 숨기기 위치 */
@@ -227,12 +227,12 @@ li.imglist1 {
 	z-index: 10;
 	left:0; top:0;
 	background: url(../img/slide2.jpg) no-repeat;
-}/*../img/slide3.jpg*/
+}
 li.imglist2 {
 	position: absolute;
 	z-index: 10;
 	left:0; top:0;
-	background: url(../img/summer2_bg.jpg) no-repeat;
+	background: url(../img/slide3.jpg) no-repeat;
 }
 .roll_content {
 	position: static;

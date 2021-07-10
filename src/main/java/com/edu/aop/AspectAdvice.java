@@ -53,7 +53,7 @@ public class AspectAdvice {
 	@Around("execution(* com.edu.controller.HomeController.board_delete(..)) || execution(* com.edu.controller.HomeController.board_update*(..))")
 	public Object check_board_crud(ProceedingJoinPoint pjp)throws Throwable {
 		//request객체는 이전페이지 URL+session_userid(세션값)을 가져오기 위해서 필요
-		HttpServletRequest request = ((ServletRequestAttributes) 		RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		//사용할 변수 초기화(null)
 		String user_id=null;//게시물 작성자 ID
 		BoardVO boardVO=null;//boardVO.getWriter()게시물의 작성자 아이디 구할려면 필요한 객체변수

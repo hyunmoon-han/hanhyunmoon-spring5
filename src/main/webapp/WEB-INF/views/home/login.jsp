@@ -42,7 +42,8 @@ if("${param.msg}" == "fail"){
 
                 </ul>
                 <p class="btn_line">
-                <button class="btn_baseColor">로그인</button>
+                <button type="submit" class="btn_baseColor">로그인</button>                                
+                <button type="button" class="btn_baseColor" id="btn_naver_login" style="background:#19ce60;min-width:250px">네이버 로그인</button>
                 </p>	
             </fieldset>
         </form>
@@ -54,3 +55,14 @@ if("${param.msg}" == "fail"){
 
 
 <%@ include file="./include/footer.jsp" %>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+<script>
+$(document).ready(function(){
+	$("#btn_naver_login").click(function(){
+		//alert("테스트");
+		location.replace("${url}");//로그인 컨트롤러에서 모델로 받은 $url변수값이 필요
+		//위 url자바  변수값은 네이버의 ResstAPI주소 입니다.(필수값으로 :네아로 인증 ID와 secret암호 가 url에 포함됨.)
+	});
+});
+
+</script>

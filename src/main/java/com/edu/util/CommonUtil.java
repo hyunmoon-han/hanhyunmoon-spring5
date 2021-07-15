@@ -220,9 +220,30 @@ public class CommonUtil {
 	}
 
 
-	public void profile_upload(String user_id, HttpServletRequest request, MultipartFile file) {
+	public void profile_upload(String user_id, HttpServletRequest request, MultipartFile file) throws IOException {
 		// TODO 프로필 이미지는 보안이 필요한 폴더가 아닌,resources폴더에 업로드 처리.서버의 경로필요
 		String folderPath =request.getServletContext().getRealPath("/resources/profile");
+		//url로 업로드 할수 없기 떄문에 , 서버경로를 구하는 명령.
+		File makeFolder = new File(folderPath);//공백인 객체가 생성
+		if(!makeFolder.exists()) {
+			makeFolder.mkdir();//여기서 신규폴더가 생성이 됩니다.
+		}
+		//1개에 파일이 1000개 이상이면 ,조회속도가 느려짐
+		//년월폴더를 생성후, 해당년월에 업로드된 파일은 년월폴더로 관리.
+		byte[] fileData= file.getBytes();
+		File target = new File(makeFolder,user_id+".png");//user_id는 PK이기 때문에 기존파일이 있다면 ,덮어쓰면서저장됨
+		FileCopyUtils.copy(fileData, target);//첨부파일이 저장이 됩니다.		
+		
+	}
+
+
+	public void profile_delete(String user_id, HttpServletRequest request) {
+		// 프로필 이미지가 프로필 폴더에존재하면 삭제하는 로직
+		String folderPath = request.getServletContext().getRealPath("/resources/profile");
+		File target = new File(folderPath,user_id+".png");
+		if(target.exists()) {
+			target.delete();//프로필 파일이 실제로 지워짐.
+		}
 		
 	}
 	

@@ -73,7 +73,7 @@ public class LoginController {
 		
 		if(status.equals("success")){// 네이버 인증처리 겨로가가 success 이면 실행
 			//인증 성공 이후 스크링 시큐리티의 ROLE_USER권한을 받아야지만 ,insert,memver,opdate...URL등에 접근이 가능함.
-			//시작 :여기붙처가 스프링시큐리티 코드가 시작됨
+			//시작 :여기부터가 스프링시큐리티 코드가 시작됨
 			//여기서 부터 코드가 네이버와는 관계없는 스프링 코드가 시작됩니다.
 			List<SimpleGrantedAuthority> authorityies = new ArrayList();//스프링 시큐리티 권한을 강제로만듭니다.
 			authorityies.add(new SimpleGrantedAuthority("ROLE_USER"));//ROLE_USER라는 권한을 강제로 추가.

@@ -23,7 +23,7 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2"/>
 	</beans:bean>
-	<!-- 위의 view리졸버(해석기)는 .jsp로 바인딩되는 역활을 합니다.그래서 이것도 사용하고 ,아래,jsonview도 동시에 같이 사용해야 함. -->
+	<!-- 위의 view리졸버(해석기)는 .jsp로 바인딩되는 역활을 합니다.그래서 이것도 사용하고 ,아래,jsonview도 동시에 같이 사용해야 함.위를 통해 컨트롤러에서 리턴값으로,jsp를 생략가능 -->
 	<!-- 2개를 동시에 사용해야 해서 ,뷰리졸버의 순서를 매겨야합니다. -->
 	<!-- BeanNameViewResolver 설정추가 컨트롤러의 view이름을 파일명이 아닌 빈으로 리턴받을 수 있음.  -->
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
@@ -32,6 +32,20 @@
 	<!-- 2010년 스프링 초창기 부터 사용했던RestApt구현방식입니다. 컨트롤러에서 리턴받는 값을 빈의 ID로 지정해서 jsp에서 return값으로 사용.-->
 	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	
+	<!-- 타일즈 템블릿 리졸버(해석기)를 추가->join.titles..을 리졸버(해석)가능하게됨 -->
+	<beans:bean id="titlesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="order" value="0"/>
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+	</beans:bean>
+	<!-- 타일즈 설정파일 tiles-context가져오기 -->
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:value>
+				/WEB-INF/spring/tiles-context.xml
+			</beans:value>
+		</beans:property>
+	</beans:bean>
+		
 	<context:component-scan base-package="com.edu.controller" />
 	<context:component-scan base-package="com.edu.util" />
 	<!-- AOP 프록시 저장소 추가와 AOP기본설정내용자동추가됨. -->

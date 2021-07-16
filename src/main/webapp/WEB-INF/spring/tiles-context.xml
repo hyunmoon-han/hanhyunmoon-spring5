@@ -1,0 +1,26 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+ "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!-- dtd: document type definition 문서 형태 정의 -->
+
+<tiles-definitions>
+	<definition name="tiles_layout" templateExpression="/WEB-INF/views/tiles/layouts/layout.jsp">
+		<put-attribute name="header" expression="/WEB-INF/views/tiles/layouts/header.jsp"/>
+		<put-attribute name="content" expression=""/><!-- content내용은 동적으로 변경-비워둠 -->
+		<put-attribute name="footer" expression="/WEB-INF/views/tiles/layouts/footer.jsp"/>
+	</definition>
+	<!-- *.titles는 컨트롤러의 String 리턴값으로 사용됩니다. jsp대신에 뷰단을 대체. -->
+	<!-- index.tiles또는 join.tiles 이런 리턴을 사용하면 아래{1}=index,join -->
+	<definition name="*.tiles" extends="tiles_layout">
+		<put-attribute name="content" expression="/WEB-INF/views/tiles/{1}.jsp"/>
+	</definition>
+	<!-- board/board_insert.tiles 이런 리턴을(컨트롤러에서)사용하면 아래{1}/{2}=board/board_insert -->
+	<definition name="*/*.tiles" extends="tiles_layout">
+		<put-attribute name="content" expression="/WEB-INF/views/tiles/{1}/{2}.jsp"/>
+	</definition>
+	<!-- 사이트가 복잡해 지면, 3단꼐 타일즈를 사용합니다.(아래) -->	
+	<definition name="*/*/*.titles" extends="tiles_laypout">
+		<put-attribute name="content" expression="/WEB-INF/views/titles/{1}/{2}/{3}.jsp"/>
+	</definition>
+</tiles-definitions>
+ 
+ 

@@ -277,7 +277,8 @@ public class HomeController {
 	@RequestMapping(value="/join_form",method=RequestMethod.GET)
 	public String join_form()throws Exception{
 		
-		return "home/join";//.jsp생략
+		//return "home/join";//.jsp생략   타일즈 적용전
+		return "join.tiles";//tiles폴더안네 join.jsp적용
 	}
 	//마이페이지에서 회원탈퇴POST방식처리만.
 	@RequestMapping(value="/member/mypage_leave",method=RequestMethod.POST)
@@ -348,7 +349,8 @@ public class HomeController {
 		pageVO.setQueryPerPageNum(5);//공지사항은 5개,board_type필요 (세션으로 처리 않됨)
 		pageVO.setBoard_type("notice");
 		model.addAttribute("latestNotice",boardService.selectBoard(pageVO));//공지사항 최근 게시물 
-		return "home/index";//확장자가 생략.jsp가 생략되어 있음.
+		//return "home/index";//확장자가 생략.jsp가 생략되어 있음. 타일즈 적용전 
+		return "index.tiles";//타일즈 적용 후-> 타일즈 폴더 안쪽에 index.jsp를 호출  
 	}
 	
 }

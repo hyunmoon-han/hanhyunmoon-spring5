@@ -296,7 +296,7 @@ public class AdminController {
 	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.POST)
 	public String updateMember(HttpServletRequest request,MultipartFile file,MemberVO memberVO , PageVO pageVO)throws Exception{// (받은값)
 		//프로필 이미지 처리 추가
-		if(!file.getOriginalFilename().isEmpty()) {
+		if(!file.getOriginalFilename().isEmpty()) {//비어있지 않으면 
 			String user_id=memberVO.getUser_id();
 			commonUtil.profile_upload(user_id, request, file);
 		}

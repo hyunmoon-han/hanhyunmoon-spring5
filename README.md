@@ -82,18 +82,293 @@
 - Hash해시태그: 그물망(해시)=#=좌표(x,y)=(Key:Value)
 - isEmpty:list안에 아무것도 없는 상태.(값이 존재하지 않는 상태)-객체에 ""이란 값으로 들어가 있는 상태이다.(공백도값으로 처리되기 떄문에)vsnull:인스턴스가 생성되지 않은 상태를 말한다.list변수가 메모리에 아무런 주소값도 참조하지 않은 상태->list값이 없을 경우null로 처크하면x
 
-####20210716(월)작업.
-- 화페매수구하기:277550원 입금금액이 있다면,
-- 5만원 짜리 지폐는 몇장인지,
-- 1만원 짜리 지폐는 몇장인지,
-- 5천원 짜리 지폐는 몇장인지,
-- 1천원 짜리 지폐는 몇장인지,
+#### 20210720(화) 작업예정.
+- 코딩테스트 10번 마무리.
+- 코딩테스트 9번 부터 시작,
+- 코딩테스트 8,7,6까지 마무리.
+- 8교시에 UI구현 워드문서 과제물 제출전, 7교시에 확인예정.
 
--빅 O 사간복잡도 구하기:for문을 1개면, BigO=N,
--중목for이면,Big O=N^2
-- for(i=i,i==3,i++){for(i=1,i==3,i++}{구현로직}
-- 위 중복 for문은 시간복잡도가 N^2
-- 프로그램의 성능을 측정하는 단위 빅O표기사용합니다. 
+#### 20210719(월) 작업.
+- 코딩실습10. 로또번호가 올바른 번호인지 확인하는 코드작성 코딩테스트 10번소스(아래) 작업중...
+
+```
+import java.util.Scanner;
+import java.util.Arrays;
+class Main {
+	public static boolean isValid(int[] Lotto, int n) {
+		//조건 1, 2, 3 구현하는 코딩이 입력(아래)
+		if(n != 6) {//조건1중 일부
+			return false;//현재 isValid메서드가 종료되면서, false를 반환 합니다.
+		}
+		//조건1, 중복숫자 검사로직
+		for(int i=0;i<(n-1);i++) {
+			if(Lotto[i] == Lotto[i+1]) {
+				return false;//중복숫자기 있으면, 현재 isValid메서드를 종료 하고, false를 반환합니다. 
+			}
+		}
+		//조건2, 숫자범위는 1부터 45까지의 숫자만 인정이 됨
+		
+		//조건3, 현재 로또번호가 오름차순 정렬로 되었는지 확인하는 로직
+		
+		return true;
+	}
+	public static void main(String[] args) {
+		int n;//6개의 로또번호 입력받을 크기
+		int[] Lotto;//배열의 크기가 필요
+		boolean Real;//진짜 로또번호인지 확인결과 참/거짓
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		Lotto = new int[n];
+		for(int i=0;i<n;i++) {
+			Lotto[i] = sc.nextInt();
+		}
+		System.out.println("주운 로또 번호는 "+Arrays.toString(Lotto));
+		Real = isValid(Lotto, n);
+		if(Real == true) {
+			System.out.println("주운 로또번호는 진짜 입니다.");
+		}else{
+			System.out.println("주운 로또번호는 가짜 입니다.");
+		}
+	}	
+}
+```
+
+- 10진수를 2진수로 변환 코딩테스트05소스(아래)
+- 13 = 1101(2)
+- 13 = 10의 자리 1, 1의 자리 3
+- 1101 = 8421(자리수)코드 = 2(3)자리수 1, 2(2)자리는 1, 2(1)자리는 0, 2(0)자리는 1
+- 모든수의 0승(제곱) = 1
+
+-코딩실습05. 소스(아래)
+
+```
+import java.util.Scanner;
+import java.util.Arrays;
+class Main {
+	public static void main(String[] args) {
+		int[] Bin = new int[10];//배열 크기가 10인 정수형 배열변수 생성.
+		int Dec;//키보드로 입력받을 십진수 저장공간
+		int idx = 0;//반복문에 사용할 변수선언
+		int Mok, Nmg;//몫과 나머지로 변수로 사용.
+		Scanner sc = new Scanner(System.in);
+		Dec = sc.nextInt();
+		while(true) {
+			Mok = (int) Dec/2;
+			Nmg = Dec - (Mok*2);//나머지를 구하는 공식
+			Bin[idx] = Nmg;
+			idx = idx + 1;//idx++
+			if(Mok==0) {
+				break;
+			}else{
+				Dec = Mok;
+			}
+		}//반복문 끝
+		//역순 출력에 대한 로직 1101 -> 1011역순으로 출력
+		for(int i=idx-1;i>=0;i--) {
+			System.out.print(Bin[i] + " ");
+		}
+	}
+}
+
+```
+- -----------------------------------------------
+- 코딩실습04 삽입정렬 코딩테스트04소스(아래).오름차순에서 10번 반복 결과가 나옴.
+- -----------------------------------------------
+
+```
+import java.util.Scanner;
+import java.util.Arrays;
+class Main {
+	public static void main(String[] args) {
+		int n;
+		int[] Numbers;
+		int insert, comp, Key;
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		Numbers = new int[n];
+		for(int i=0;i<n;i++) {
+			Numbers[i] = sc.nextInt();
+		}
+		//System.out.println("키보드로 입력받은 배열의 값은 " + Arrays.toString(Numbers));
+		for(insert=1;insert<n;insert++) {
+			Key = Numbers[insert];//인덱스1의 값 4를 삽입
+			for(comp=insert-1;comp>=0;comp--) {
+				if(Numbers[comp] > Key) {//5와 4를 비교
+					Numbers[comp+1] = Numbers[comp];//인덱스1의 자리에 5를 삽입
+				}else{
+					break;//내부for 빠져나감
+				}
+				//if(insert < 3) {
+					System.out.println("내부 for문 "+comp+" 회전일때 Numbers값은 "+ Arrays.toString(Numbers));
+				//}
+			}
+			//System.out.println("comp 값은 " + comp);
+			Numbers[comp+1] = Key;//인덱스0의 자리에 4를 입력
+			//if(insert < 3) {
+			//	System.out.println("외부 for문 키값은 "+Key+" Numbers값은 "+ Arrays.toString(Numbers));
+			//}
+		}
+		for(int i=0;i<n;i++) {
+			System.out.print(Numbers[i] + " ");
+		}
+	}	
+}
+```
+- ----------------------------------------------
+- 버블정렬 코딩테스트03소스(아래).오름차순에서 20번 만에 결과가 나옴.
+- ----------------------------------------------
+- 특징1: 선택정렬과는 반대로 제일 큰 값이 오른쪽에 배치되면서 1회전이 종료
+- 참고) 선택정렬은 제일 작은 값이 왼쪽에 배치되면서 1회전이 종료
+- 특징2: 비교할때 선택정렬은 비교할 기준자리가 있으나, 버블정렬은 바로 옆의 값을 비교하는 방식(거품방식)
+
+코딩실습03. 소스(아래)
+
+```
+import java.util.Scanner;
+import java.util.Arrays;
+class Main {
+	public static void main(String[] args) {
+		int n;
+		int[] Numbers;
+		int bubble, idx, Temp;
+		Scanner sc = new Scanner(System.in);//키보드로 입력 스캐너객체 생성
+		n = sc.nextInt();
+		Numbers = new int[n];//배열의 크기 지정
+		for(int i=0;i<n;i++) {
+			Numbers[i] = sc.nextInt();
+		}
+		System.out.println("입력된 배열값 확인 " + Arrays.toString(Numbers));
+		for(bubble=0;bubble<n;bubble++) {
+			for(idx=0;idx<n-1;idx++) {
+				if(Numbers[idx] > Numbers[idx+1]) {
+					Temp = Numbers[idx];
+					Numbers[idx] = Numbers[idx+1];
+					Numbers[idx+1] = Temp;
+				}
+				if(bubble == 0) {
+					System.out.println(Arrays.toString(Numbers) + "(내부 for"+(idx+1)+"회전)");
+				}				
+			}
+		}
+		//졍렬 결과값 출력(아래)
+		for(int i=0;i<5;i++) {
+			System.out.print(Numbers[i] + " ");
+		}
+	}	
+}
+```
+- -----------------------------
+- 선택정렬 : 10번 반복으로 졍렬결과 나옴.
+- -----------------------------
+- *Temp변수사용 정렬 코딩 테스트02소스(아래).지난주에 사용한 Arrays클래스 sort메서드구성연습
+- 예, 중복  for문에서 외부1회전(내부 for문 1회전-4회전)
+- 5, 4, 3, 2, 1(원시데이터)
+- 4, 5, 3, 2, 1(내부for1회전-1번째)
+- 3, 5, 4, 2, 1(내부for2회전-2번째)
+- 2, 5, 4, 3, 1(내부for3회전-3번째)
+- 1, 5, 4, 3, 2(내부for4회전-4번째)
+- 외부2회전 (내부 for문 2부터-4회전)
+- 1, 5, 4, 3, 2(원시데이터)
+- 1, 4, 5, 3, 2(내부for1회전-2번째)
+- 1, 3, 5, 4, 2(내부for2회전-3번째)
+- 1, 2, 5, 4, 3(내부for3회전-4번째)
+
+- 코딩실습02. 소스(아래)
+
+```
+import java.util.Scanner;
+import java.util.Arrays;//로직에서 필요 없으나, 디버그용으로 사용
+class Main {
+	public static void main(String[] args) {
+		int n;//정렬할 숫자의 개수 변수생성
+		int[] Numbers;//배열변수 생성
+		int prev, next, Temp;//이전,다음,임시저장변수 생성
+		Scanner sc = new Scanner(System.in);//스캐너클래스를 이용해서 바이트단위(문자)로 키보드로 입력받음 커서발생
+		n = sc.nextInt();//키보드로 입력받는 내용을 n에 입력합니다.
+		//System.out.println("키보드로 입력받은 변수값은 : " + n);
+		Numbers = new int[n];//배열변수의 크기 초기화.
+		for(int i=0;i<n;i++) {//키보드 정렬할 변수값을 입력 받습니다.Numbers[]배열변수에...
+			Numbers[i] = sc.nextInt();
+		}
+		//Arrays.sort(Numbers);
+		System.out.println("입력한 배열값은 " + Arrays.toString(Numbers));
+		//여기서부터 소팅로직 시작
+		for(prev=0;prev<(n-1);prev++) { //예, 5개 숫자를 입력하면, 4번 반복합니다. 
+			//n-1번만 이유는 4번째 이후 비교할 다음변수가 있기 때문에
+			for(next=(prev+1);next<n;next++) {
+				if(Numbers[prev] > Numbers[next]) {//이전변수값이 더 크다면, 앞 뒤 변수값을 자리 바꿈합니다.
+					//위 부등호만 바꾸면, > 오름차순, < 내림차순
+					Temp = Numbers[prev];//이전변수값이 저장
+					Numbers[prev] = Numbers[next];
+					Numbers[next] = Temp;
+				}
+			}
+		}
+		//자리바꿈결과를 출력하는 구문, Arrays유틸클래스 사용하지 않고, for문사용
+		//인덱스 개수 5개 , 0부터시작하기 때문에 4까지가 인덱스 번호의 끝
+		for(int i=0;i<n;i++) {
+			System.out.print(Numbers[i]+ " ");
+		}
+	}
+}
+```
+
+
+- 코딩실습01. *스위치변수 사용 코딩 테스트01소스(아래).
+
+```
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));//문자열을 입력하는 커서가 발생
+		int UNIT = 50000;//화폐의 최고단위 금액, 초기화폐단위 초기화
+		int NUM = 0;//(입력금액/단위금액) = 단위금액의 화폐매수 변수 초기화
+		int SW = 0;//스위치(On/Off)변수=플래그(깃발)변수 초기화
+		int MONEY = Integer.parseInt(br.readLine());
+		while(true) { //IoT쪽에서는 while(true)문으로 외부데이터를 읽어 들입니다.
+			if(UNIT>=1) {
+				NUM = (int) MONEY/UNIT;//화폐매수는 0.5매수는 없기때문에 정수로 형변환합니다.
+				System.out.println(UNIT+" 원의 화폐매수는 "+NUM);
+				//다음반복을 위해서 MONEY변수 값 조정, UNIT변수값 조정
+				MONEY = MONEY-(UNIT*NUM);//277777-250000 = 25000 (1회전결과)
+				if(SW==0) {
+					UNIT = UNIT/5;//5만원->1만원으로 단위변경(1회전결과,3회전,5회전...)
+					SW = 1;//1회전 후 SW스위치변수값을 1로 변경
+				}else{
+					UNIT = UNIT/2;//1만원->5천원으로 단위변경(2회전결과,4회전,6회전...)
+					SW = 0;//2회전 후 SW스위치변수값을 0으로 변경
+				}
+			}else{
+				break;//while반복문을 STOP합니다.무한반복을 벗어나는 코드
+			}
+			
+		}
+		
+	}
+}
+```
+- *빅O 시간복잡도 구하기: for문을 1개면, Big O(N)번 횟수, 
+- 중복for문이면, Big O = N^2
+- for(i=1, i=3, i++) { for(ii=1,ii=3,ii++) { 구현로직 } }
+- 위 중복for문은 시간복잡도가 O(N^2)번 횟수
+- 프로그램의 성능을 측정하는 단위 빅O 표기사용합니다.
+- 화폐매수구하기: 277,777원 입금금액 있다면,
+- 5만원짜리 지폐는 몇장인지, = 5장
+- 1만원짜리 지폐는 몇장인지, = 2장
+- 5천춴짜리 지폐는 몇장인지, = 1장 
+- 1천원짜리 지폐는 몇장인지, = 2장
+- 500원 동전은 몇개인지,   = 1개
+- 100원 동전은 몇개인지,   = 2개
+- 50원 동전은 몇개인지,    = 1개
+- 10원, 5원, 1원              = 2개, 1개, 2개
+- 화폐단위가 5만원 부터 시작해서 입력금액/UNIT 1회 반복할때마다 UNIT변경
+- 화폐단위(UNIT)변수가 바뀌는 순서 로직(아래)
+- SW=0 : 5만, 5천원, 500원, 50원, 5원 = UNIT/5
+- SW=1 : 1만, 1천원, 100원, 10원, 1원 = UNIT/2 끝(0.5원화폐단위X)
+
+- 알고리즘 다이어그램기반으로 자바코딩테스트예정(깃 it강의저장소자료이용).
+
 
 
 #### 20210716(금) 작업.

@@ -7,6 +7,7 @@
 <head>
 <title>타일즈 템플릿사용</title>
 <meta charset="UTF-8">
+<!--  -->
 </head>
 <body>
 	<t:insertAttribute name="header"/>

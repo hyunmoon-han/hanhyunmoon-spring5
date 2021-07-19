@@ -43,7 +43,7 @@ if("${param.msg}" == "fail"){
                 </ul>
                 <p class="btn_line">
                 <button type="submit" class="btn_baseColor">로그인</button>                                
-                <button type="button" class="btn_baseColor" id="btn_naver_login" style="background:#19ce60;min-width:250px">네이버 로그인</button>
+                <button type="button" class="btn_baseColor" id="btn_naver_login" style="background:#19ce60;min-width:250px;cursor:pointer;">네이버 로그인</button>
                 </p>	
             </fieldset>
         </form>

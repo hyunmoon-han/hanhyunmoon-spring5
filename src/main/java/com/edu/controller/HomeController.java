@@ -311,7 +311,8 @@ public class HomeController {
 		String user_id=(String) session.getAttribute("session_userid");
 		//memberService에서 1개의 레코드를 가져옵니다 .model담아서 jsp로 보냅니다.
 		model.addAttribute("memberVO",memberService.readMember(user_id));
-		return "home/member/mypage";//.jsp생략
+		//return "home/member/mypage";//.jsp생략
+		return "mypage.tiles";
 	}
 	//사용자단 로그인 폼 호출 get방식,로그인 POST처리는 컨트롤러에서하지않고 스프링시큐리티로 처리
 	//네아로 로그인 떄문에 loingController클래스로 분리해서 사용합니다.그래서 아래는 주석처리
